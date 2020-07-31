@@ -1,38 +1,107 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+    height: 40vmin;
+    pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
 }
 
 .App-link {
-  color: #61dafb;
+    color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
+
+body {
+    padding-top: 55px;
+}
+
+ul#progress-bar {
+    text-align: center;
+    padding-inline-start: 0px;
+}
+
+ul#progress-bar li {
+    display: inline-block;
+    width: 50px;
+    padding-top: 20px;
+}
+
+ul#progress-bar li span.processing-box {
+    text-align: center;
+    height: 16px;
+    width: 16px;
+    color: white;
+    border-radius: 50%;
+    padding: 10px;
+    box-sizing: content-box;
+}
+
+/*ul#progress-bar li.bg-success i.fas {*/
+/*  background: mediumseagreen;*/
+/*}*/
+
+/*ul#progress-bar li .fas::after {*/
+/*  content: '';*/
+/*  background: #282c34;*/
+/*  height: 5px;*/
+/*  width: 200px;*/
+/*  display: block;*/
+/*  position: absolute;*/
+/*  left: 0;*/
+/*  top: 20px;*/
+/*}*/
+
+ul#progress-bar li .status-label {
+    font-size: 8px;
+}
+
+ul#progress-bar li span.processing-box .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    text-transform: lowercase;
+
+    /* Position the tooltip */
+    position: absolute;
+    top: 30px;
+    z-index: 1;
+}
+
+ul#progress-bar li span.processing-box:hover .tooltiptext {
+    visibility: visible;
+}
+
+span.order-status {text-transform: lowercase;}
+
+span.order-status:first-letter { text-transform: capitalize; }
+
