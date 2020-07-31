@@ -8,7 +8,8 @@ const TrackOrders = (props) => {
 
     const [trackId, setTrackId] = useState(null);
     const [trackBy, setTrackBy] = useState("");  //email
-    const [message, setMessage] = useState("Please use above field to track your order");
+    const [message, setMessage] = useState("Please use text field to track your order");
+    const [messageClass, setMessageClass] = useState("alert alert-warning show");
     const [orders, setOrders] = useState([]);
 
     const handleInputChange = e => {
@@ -20,6 +21,15 @@ const TrackOrders = (props) => {
     }
 
     const trackOrder = (e) => {
+        if(trackId == null || trackBy == null || trackBy === "" || trackId === "") {
+            setMessage("Please use text field to track your order, we cannot track your order without that information.");
+            setMessageClass("alert alert-danger show");
+            setOrders([]);
+            return
+        } else {
+            setMessage("")
+            setMessageClass("alert collapse")
+        }
         firebase
             .firestore()
             .collection("orders")
@@ -41,13 +51,10 @@ const TrackOrders = (props) => {
             ))}
 
         </table>
-    } else {
-        cardOrMessage = <div className="alert alert-primary" role="alert">
-            {message}
-        </div>
     }
 
     return<>
+    <div className={messageClass} role="alert"> {message} </div>
         <form>
             {/*onSubmit={trackOrder}>*/}
             <div className="form-group">
