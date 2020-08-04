@@ -22,7 +22,14 @@ function Header() {
                         {/*<a className="nav-link" href="/track-orders/">Track Order</a>*/}
                     </li>
                     <li className="nav-item dropdown">
-                        <Link className="nav-link" to="/admin">Admin</Link>
+                        <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Admin
+                        </a>
+                        <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <Link className="dropdown-item" to="/admin/orders"> Orders </Link>
+                            <Link className="dropdown-item" to="/admin/add-new-menu"> Add New Menu </Link>
+                        </div>
                         {/*<a className="nav-link" href="/admin/"> Admin </a>*/}
                     </li>
                 </ul>
