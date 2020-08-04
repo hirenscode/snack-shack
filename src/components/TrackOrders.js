@@ -1,7 +1,5 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import firebase from "../firebase";
-import {SETTINGS} from "../shared/Constants";
-import TrackingProgress from "./TrackingProgress";
 import TrackOrderCard from "./TrackOrderCard";
 
 const TrackOrders = (props) => {
@@ -32,7 +30,7 @@ const TrackOrders = (props) => {
         }
         firebase
             .firestore()
-            .collection("orders")
+            .collection("orders_flow")
             .where(trackBy, "==", trackId)
             .onSnapshot((snapshot) => {
                 const newOrders = snapshot.docs.map((doc) => ({
@@ -69,7 +67,6 @@ const TrackOrders = (props) => {
             </div>
         </form>
         {cardOrMessage}
-
 
     </>;
 }

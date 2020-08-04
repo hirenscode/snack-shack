@@ -13,7 +13,7 @@ const TrackOrderCard = (props) => {
         <div className="card-body">
             <h5 className="card-title"> Total: {SETTINGS.CURRENCY.SYMBOL} {order.total} </h5>
             <p className="card-text"> Contact: <strong> {order.contact} </strong>  | Email: <strong> {order.email} </strong> </p>
-            <a href="#" className="btn btn-primary"> Action Item </a>
+            {/*<a href="#" className="btn btn-primary"> Action Item </a>*/}
         </div>
         <ul className="list-group list-group-flush"> {
             order.selectedItems.map(item =>

@@ -4,20 +4,31 @@ import firebase from "../firebase";
 import {SETTINGS} from "../shared/Constants";
 
 const OrderMenuForm = (props) => {
-    const initialValues = {
+    const initialOrder = {
         contact: "",
         name: "",
         email: "",
         selectedItems: [],
+        status: {},
         comments: "",
-        total: 0
+        total: 0,
+        paymentDone: false
+    }
+
+    const initialOrderFlow = {
+        orderId: "",
+        statusId: 1,
+        lastUpdateDate: Date.now(),
+        comments: "ORDER PLACED (Auto Comment) ",
+        paymentDone: false
     }
 
     let showAlertSuccessClass = "alert alert-success alert-dismissible fade show";
     let showAlertErrorClass = "alert alert-danger alert-dismissible fade show";
     let hideAlertClass = "alert collapse";
 
-    let [values, setValues] = useState(initialValues);
+    let [order, setOrder] = useState(initialOrder);
+    let [orderFlow, setOrderFlow] = useState(initialOrderFlow);
     let [message, setMessage] = useState("");
     let [showAlert, setShowAlert] = useState(hideAlertClass);
 
@@ -26,7 +37,7 @@ const OrderMenuForm = (props) => {
         useEffect(() => {
             firebase
                 .firestore()
-                .collection('menus')
+                .collection("menus")
                 .onSnapshot((snapshot => {
                     const newMenus = snapshot.docs.map((doc) => ({
                         id: doc.id,
@@ -46,8 +57,8 @@ const OrderMenuForm = (props) => {
         let {name, value} = e.target;
         console.log("Name " + name);
         console.log("Value " + value);
-        setValues({
-            ...values,
+        setOrder({
+            ...order,
             [name]: value
         })
 
@@ -55,7 +66,7 @@ const OrderMenuForm = (props) => {
 
     const handleSelectedItem = (menuItem) => {
         menuItem.checked = !menuItem.checked;
-        let newSelectedItems = values.selectedItems;
+        let newSelectedItems = order.selectedItems;
         let newTotal = 0;
         let indexOfItem = newSelectedItems.map(i => i.id).indexOf(menuItem.id);
         if (indexOfItem === -1 && menuItem.checked) {
@@ -64,17 +75,20 @@ const OrderMenuForm = (props) => {
             newSelectedItems.splice(indexOfItem, 1);
         }
         newTotal = newSelectedItems.map(i => (i.price * 1)).reduce((p, c) => p + c, newTotal);
-        let newValues = {...values, total: newTotal, selectedItems: newSelectedItems};
-        setValues(newValues);
+        const newOrder = {...order, total: newTotal, selectedItems: newSelectedItems};
+        setOrder(newOrder);
     }
 
     const placeOrder = e => {
-        let newValues = {...values, status: 1, orderPlacedAt: Date.now()};
-        setValues(newValues);
+        const newOrder = {...order, status: 1, orderPlacedAt: Date.now()};
+        let orderDocId = "";
+        debugger;
+        setOrder(newOrder);
         e.preventDefault();
         e.persist();
-        firebase.firestore().collection("orders").add(values)
-            .then(() => {
+        firebase.firestore().collection("orders").add(newOrder)
+            .then((docRef) => {
+                orderDocId = docRef.id;
                 e.target.reset();
                 setMessage("Order Placed successfully!");
                 setShowAlert(showAlertSuccessClass);
@@ -82,6 +96,20 @@ const OrderMenuForm = (props) => {
             })
             .catch(err => {
                 setMessage("There was some error placing order, please try again!");
+                setShowAlert(showAlertErrorClass);
+                window.scrollTo(0, 0);
+                console.log(err)
+            });
+
+        const newOrderFlow = {orderId: orderDocId, ...orderFlow};
+        setOrderFlow(newOrderFlow);
+
+        firebase.firestore().collection("orders_flow").add(newOrderFlow)
+            .then(() => {
+                console.debug("Orders flow was successfully updated");
+            })
+            .catch(err => {
+                setMessage("There was some error updating order flow, your order was placed successfully, but sequence of order might be disturbed!");
                 setShowAlert(showAlertErrorClass);
                 window.scrollTo(0, 0);
                 console.log(err)
@@ -141,7 +169,7 @@ const OrderMenuForm = (props) => {
                 <div className="card">
                     <h5 className="card-header"> Total Amount </h5>
                     <div className="card-body">
-                        <h5 className="card-title"> {SETTINGS.CURRENCY.SYMBOL} {values.total} </h5>
+                        <h5 className="card-title"> {SETTINGS.CURRENCY.SYMBOL} {order.total} </h5>
                         <p className="card-text"> total amount shown here does not include taxes or GST.</p>
                         {/*<a href="#" className="btn btn-primary">Go somewhere</a>*/}
                     </div>

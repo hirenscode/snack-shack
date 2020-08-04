@@ -2,7 +2,6 @@ import React from "react";
 import MainHeader from "../MainHeader";
 import Header from "../Header";
 import Footer from "../Footer";
-import OrdersList from "../../components/OrdersList";
 import OrderMenuForm from "../../components/OrderMenuForm";
 
 function Home() {
