@@ -21,7 +21,7 @@ const TrackOrderCard = (props) => {
         }
         </ul>
         <div className="card-footer text-muted">
-            <TrackingProgress orderStatus={order.status}/>
+            <TrackingProgress orderStatus={order.status} orderId={order.id}/>
         </div>
     </div>
 }

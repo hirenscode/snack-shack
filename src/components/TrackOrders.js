@@ -30,7 +30,7 @@ const TrackOrders = (props) => {
         }
         firebase
             .firestore()
-            .collection("orders_flow")
+            .collection("orders")
             .where(trackBy, "==", trackId)
             .onSnapshot((snapshot) => {
                 const newOrders = snapshot.docs.map((doc) => ({
