@@ -82,7 +82,6 @@ const OrderMenuForm = (props) => {
     const placeOrder = e => {
         const newOrder = {...order, status: 1, orderPlacedAt: Date.now()};
         let orderDocId = "";
-        debugger;
         setOrder(newOrder);
         e.preventDefault();
         e.persist();
