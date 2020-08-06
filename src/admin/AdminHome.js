@@ -1,19 +1,19 @@
 import React from "react";
-import AdminMainHeader from "./AdminMainHeader";
-import OrdersList from "../components/OrdersList";
-import Header from "../shared/Header";
-import Footer from "../shared/Footer";
+import AddMenuView from "../shared/views/AddMenuView";
+import OrdersListView from "../shared/views/OrdersListView";
+import Route from "react-router-dom/es/Route";
+import Switch from "react-router-dom/es/Switch";
+import AdminOperations from "./AdminOperations";
+import Redirect from "react-router-dom/es/Redirect";
 
-function AdminHome() {
+function AdminHome({match}) {
     return <>
-        <Header/>
-        <main role="main" style={{position: "relative"}}>
-            <AdminMainHeader/>
-            <div className="container">
-                <OrdersList/>
-            </div>
-        </main>
-        <Footer/>
+        <Switch>
+            <Route exact path={`${match.path}/orders`} component={OrdersListView}/>
+            <Route exact path={`${match.path}/add-new-menu`} component={AddMenuView}/>
+            {/*<Route exact path={`${match.path}/operations`} component={AdminOperations}/>*/}
+            {/*<Redirect from={match.path} to={`${match.path}/operations`}/>*/}
+        </Switch>
     </>;
 }
 
