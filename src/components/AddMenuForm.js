@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import {SETTINGS} from "../shared/Constants";
 import * as firebase from "firebase";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const AddMenuForm = props => {
     const storageRef = firebase.storage();
@@ -16,9 +18,24 @@ const AddMenuForm = props => {
     const [image, setImage] = useState(null);
     const hideProgressBarClass = "invisible progress";
     const animatedStripedProgressBarClass ="progress-bar progress-bar-striped progress-bar-animated"
+    const spiceLevelTags = ["ZERO SPICY","MILD","SPICY", "HOT", "BEYOND HOT"];
+    const getSpiceLabelIndex =(spiceLevel, spiceLevelTags) => {
+        return Math.floor(spiceLevel / (100 / spiceLevelTags.length));
+    }
+
+    const peppers = (x) => {
+        x = x < spiceLevelTags.length ? x : (spiceLevelTags.length - 1);
+        return [...Array(x)].map((e, i) => <i className="fa fa-pepper-hot"/>)
+    }
+
     const [progressBarClass, setProgressBarClass] = useState(hideProgressBarClass);
     const [progressBarValue, setProgressBarValue] = useState(1);
     const [progressBarAnimationClass, setProgressBarAnimationClass] = useState(animatedStripedProgressBarClass);
+    const [orderPlacementDateTime, setOrderPlacementDateTime] = useState();
+    const [orderDeliveryDateTime, setOrderDeliveryDateTime] = useState();
+    const [spiceLevel, setSpiceLevel] = useState(0);
+    const [spiceLevelLabel, setSpiceLevelLabel] = useState(spiceLevelTags[getSpiceLabelIndex(spiceLevel, spiceLevelTags)]);
+
 
     const handleInputChange = e => {
         let {name, value} = e.target;
@@ -123,7 +140,7 @@ const AddMenuForm = props => {
         <div className={progressBarClass}>
             <div className={progressBarAnimationClass} role="progressbar"
                  aria-valuenow={progressBarValue} aria-valuemin="0" aria-valuemax="100"
-                 style={{width: `${progressBarValue}%`}}></div>
+                 style={{width: `${progressBarValue}%`}}/>
         </div>
         <div className="input-group mb-3">
             <div className="custom-file">
@@ -145,27 +162,53 @@ const AddMenuForm = props => {
                        onChange={handleInputChange}/>
             </div>
         </div>
-        <div className="form-group">
-            <div className="input-group mb-3">
-                <div className="input-group-prepend">
-                    <span className="input-group-text">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-calendar-plus"
-                             fill="currentColor"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path fillRule="evenodd"
-                                  d="M8 7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H6a.5.5 0 0 1 0-1h1.5V7.5A.5.5 0 0 1 8 7z"/>
-                            <path fillRule="evenodd"
-                                  d="M7.5 9.5A.5.5 0 0 1 8 9h2a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0v-2z"/>
-                            <path fillRule="evenodd"
-                                  d="M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1zm1-3a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2z"/>
-                            <path fillRule="evenodd"
-                                  d="M3.5 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zm9 0a.5.5 0 0 1 .5.5V1a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5z"/>
-                        </svg>
-                    </span>
-                </div>
-                <input placeholder="Date and Time of Availability" className="form-control" id="dateTime"
-                       name="dateTime" onChange={handleInputChange}/>
+        <div className="form-group row">
+            <label htmlFor="orderPlaceDateTime" className="col-sm-4 col-form-label"> Enter Date and Time till order could be placed. </label>
+            <div className="col-sm-8">
+                <DatePicker className="form-control"
+                    disabledKeyboardNavigation
+                    selected={orderPlacementDateTime}
+                    onChange={date => {
+                        setOrderPlacementDateTime(date);
+                        setMenu({
+                            ...menu,
+                            "placeOrderBy": date
+                        })
+                    }}
+                    timeInputLabel="Time:"
+                    dateFormat="MM/dd/yyyy h:mm aa"
+                    showTimeInput
+                />
             </div>
+        </div>
+        <div className="form-group row">
+            <label htmlFor="orderPlaceDateTime" className="col-sm-4 col-form-label"> Expected Delivery By. </label>
+            <div className="col-sm-8">
+                <DatePicker className="form-control"
+                            disabledKeyboardNavigation
+                            selected={orderDeliveryDateTime}
+                            onChange={date => {
+                                setOrderDeliveryDateTime(date);
+                                setMenu({
+                                    ...menu,
+                                    "etaDeliveryBy": date
+                                })
+                            }}
+                            timeInputLabel="Time:"
+                            dateFormat="MM/dd/yyyy h:mm aa"
+                            showTimeInput
+                />
+            </div>
+        </div>
+        <div className="form-group">
+            <label htmlFor="spiceLevel"> Spice Level {spiceLevelLabel} {peppers(getSpiceLabelIndex(spiceLevel, spiceLevelTags))} </label>
+            <input type="range" name="spiceLevel" className="form-control-range"
+                   id="spiceLevel" value={spiceLevel}
+                   onChange={e => {
+                        setSpiceLevel(parseInt(e.target.value));
+                        setSpiceLevelLabel(spiceLevelTags[getSpiceLabelIndex(spiceLevel, spiceLevelTags)]);
+                        handleInputChange(e)
+                    }}/>
         </div>
         <div className="form-group">
             <button type="submit" className="btn btn-primary btn-lg btn-block" onSubmit={addMenu}>Add Menu </button>
