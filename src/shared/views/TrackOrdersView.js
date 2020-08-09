@@ -2,7 +2,7 @@ import MainHeader from "../MainHeader";
 import React from "react";
 import Footer from "../Footer";
 import Header from "../Header";
-import TrackOrders from "../../components/TrackOrders";
+import TrackOrders from "../../components/track-order/TrackOrders";
 
 function TrackOrdersView() {
     return <>

@@ -1,4 +1,4 @@
-import {SETTINGS} from "../shared/Constants";
+import {SETTINGS} from "../../shared/Constants";
 import * as PropTypes from "prop-types";
 import React from "react";
 
