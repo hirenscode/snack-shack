@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {SETTINGS} from "../shared/Constants";
+import {SETTINGS} from "../../shared/Constants";
 import * as firebase from "firebase";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -35,6 +35,8 @@ const AddMenuForm = props => {
     const [orderDeliveryDateTime, setOrderDeliveryDateTime] = useState();
     const [spiceLevel, setSpiceLevel] = useState(0);
     const [spiceLevelLabel, setSpiceLevelLabel] = useState(spiceLevelTags[getSpiceLabelIndex(spiceLevel, spiceLevelTags)]);
+    const [chefRecommended, setChefRecommended] = useState(false);
+    const [todaySpecial, setTodaySpecial] = useState(false);
 
 
     const handleInputChange = e => {
@@ -201,7 +203,7 @@ const AddMenuForm = props => {
             </div>
         </div>
         <div className="form-group">
-            <label htmlFor="spiceLevel"> Spice Level {spiceLevelLabel} {peppers(getSpiceLabelIndex(spiceLevel, spiceLevelTags))} </label>
+            <label htmlFor="spiceLevel"> Spice Level <strong> {spiceLevelLabel} {peppers(getSpiceLabelIndex(spiceLevel, spiceLevelTags))} </strong> </label>
             <input type="range" name="spiceLevel" className="form-control-range"
                    id="spiceLevel" value={spiceLevel}
                    onChange={e => {
@@ -209,6 +211,24 @@ const AddMenuForm = props => {
                         setSpiceLevelLabel(spiceLevelTags[getSpiceLabelIndex(spiceLevel, spiceLevelTags)]);
                         handleInputChange(e)
                     }}/>
+        </div>
+        <div className="form-group">
+            <div className="custom-control custom-switch">
+                <input type="checkbox" className="custom-control-input" name="chefRecommended" id="chefRecommended"
+                       checked={chefRecommended} onChange={(e) => {
+                           setChefRecommended(e.target.checked);
+                           handleInputChange(e)}}/>
+                <label className="custom-control-label" htmlFor="chefRecommended">  Recommended </label>
+            </div>
+        </div>
+        <div className="form-group">
+            <div className="custom-control custom-switch">
+                <input type="checkbox" className="custom-control-input" name="todaySpecial" id="todaySpecial"
+                       checked={todaySpecial} onChange={(e) => {
+                    setTodaySpecial(e.target.checked);
+                    handleInputChange(e)}}/>
+                <label className="custom-control-label" htmlFor="todaySpecial"> Today's Special </label>
+            </div>
         </div>
         <div className="form-group">
             <button type="submit" className="btn btn-primary btn-lg btn-block" onSubmit={addMenu}>Add Menu </button>

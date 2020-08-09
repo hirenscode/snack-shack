@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import MenuItem from "./MenuItem";
-import firebase from "../firebase";
-import {SETTINGS} from "../shared/Constants";
+import firebase from "../../firebase";
+import {SETTINGS} from "../../shared/Constants";
 
 const OrderMenuForm = (props) => {
     const initialOrder = {
@@ -145,12 +145,8 @@ const OrderMenuForm = (props) => {
                     {
                         menuItems.map((menuItem) =>
                             <MenuItem
-                                title={menuItem.title}
-                                description={menuItem.description}
-                                imageSource={menuItem.imageSource}
-                                price={menuItem.price} id={menuItem.id}
+                                item={menuItem} id={menuItem.id}
                                 key={menuItem.id}
-                                checked={menuItem.checked}
                                 onChange={() => handleSelectedItem(menuItem)}
                             />
                         )

@@ -2,7 +2,7 @@ import React from "react";
 import MainHeader from "../MainHeader";
 import Header from "../Header";
 import Footer from "../Footer";
-import OrderMenuForm from "../../components/OrderMenuForm";
+import OrderMenuForm from "../../components/place-order/OrderMenuForm";
 
 function Home() {
     return <>

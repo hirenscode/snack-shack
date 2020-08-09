@@ -1,6 +1,6 @@
 import MainHeader from "../MainHeader";
 import React from "react";
-import AddMenuForm from "../../components/AddMenuForm";
+import AddMenuForm from "../../components/add-menu/AddMenuForm";
 import Header from "../Header";
 import Footer from "../Footer";
 
