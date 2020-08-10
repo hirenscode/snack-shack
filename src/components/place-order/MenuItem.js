@@ -29,7 +29,7 @@ const MenuItem = props => {
                         <h5 className="card-title"> {item.title} </h5>
                         <p className="card-text"> {item.description} </p>
                         <p className="card-text">
-                            <table class="table">
+                            <table className="table">
                                 <tbody>
                                     <tr>
                                         <td><SpiceLevel level={item.spiceLevel}/></td>
@@ -46,7 +46,7 @@ const MenuItem = props => {
             <div className="card-footer px-md-5">
                 <input className="form-check-input position-static"
                        type="checkbox" defaultChecked={item.checked}
-                       id="blankCheckbox" value={item.id}
+                       id={`selectedItem${item.id}`} name={`selectedItemName${item.id}`} value={item.id}
                        aria-label="..." onChange={handleToggle}/> {SETTINGS.CURRENCY.SYMBOL} {item.price}
             </div>
         </div>
