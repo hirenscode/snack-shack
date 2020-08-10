@@ -3,7 +3,7 @@ import React, {useEffect, useState} from "react";
 const SpiceLevel = (props) => {
     const {level} = props;
     const SPICE_LEVEL_LABELS = ["Zero Spicy", "Mild", "Spicy", "Hot", "Angry"];
-    const SPICE_LEVEL_COLORS = ["2a9d8f", "e9c46a", "f4a261", "ee8959", "e76f51"];
+    const SPICE_LEVEL_COLORS = ["008f00", "b05000", "c04000", "e02000", "ff0000"];
 
     let [levelIndex, setLevelIndex] = useState(0);
     let [levelColor, setLevelColor] = useState({});
@@ -12,13 +12,14 @@ const SpiceLevel = (props) => {
     useEffect(() => {
         let index = Math.floor(level / (100 / SPICE_LEVEL_LABELS.length))
         setLevelIndex(index);
-        setLevelColor(levelColor = {color: SPICE_LEVEL_COLORS[index]});
+        let colorStyle = {color: `#${SPICE_LEVEL_COLORS[index]}`};
+        setLevelColor(colorStyle);
         setLevelLabel(SPICE_LEVEL_LABELS[index]);
     }, []);
 
-    return <strong className="card-subtitle mb-2">
-        {levelLabel}
-        {[...Array(levelIndex)].map((e, i) => <i className="fa fa-pepper-hot" style={levelColor} key={i}/>)}
+    return <strong className="card-subtitle mb-2" style={levelColor}>
+        {levelLabel} &nbsp;
+        {[...Array(levelIndex)].map((e, i) => <i className="fa fa-pepper-hot"  key={i}/>)}
         </strong>
 }
 

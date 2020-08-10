@@ -44,7 +44,7 @@ const OrderMenuForm = (props) => {
                         ...doc.data()
                     }))
                     setMenus(newMenus.map(menu => {
-                        return {...menu, checked: false}
+                        return {...menu, checked: false, portions: 1}
                     }))
                 }))
         }, [])
@@ -74,7 +74,8 @@ const OrderMenuForm = (props) => {
         } else if (indexOfItem >= 0 && menuItem.checked === false) {
             newSelectedItems.splice(indexOfItem, 1);
         }
-        newTotal = newSelectedItems.map(i => (i.price * 1)).reduce((p, c) => p + c, newTotal);
+        debugger;
+        newTotal = newSelectedItems.map(i => (i.price * i.portions)).reduce((p, c) => p + c, newTotal);
         const newOrder = {...order, total: newTotal, selectedItems: newSelectedItems};
         setOrder(newOrder);
     }
@@ -147,7 +148,7 @@ const OrderMenuForm = (props) => {
                             <MenuItem
                                 item={menuItem} id={menuItem.id}
                                 key={menuItem.id}
-                                onChange={() => handleSelectedItem(menuItem)}
+                                onChange={() => handleSelectedItem}
                             />
                         )
                     }
