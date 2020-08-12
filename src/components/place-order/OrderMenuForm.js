@@ -38,6 +38,7 @@ const OrderMenuForm = (props) => {
             firebase
                 .firestore()
                 .collection("menus")
+                .where("placeOrderBy", ">=", new Date())
                 .onSnapshot((snapshot => {
                     const newMenus = snapshot.docs.map((doc) => ({
                         id: doc.id,
