@@ -3,6 +3,7 @@ import {SETTINGS} from "../../shared/Constants";
 import * as firebase from "firebase";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import SpiceLevel from "../place-order/SpiceLevel";
 
 const AddMenuForm = props => {
     const storageRef = firebase.storage();
@@ -13,30 +14,21 @@ const AddMenuForm = props => {
         price: "",
         dateTime: null
     }
-
-    const [menu, setMenu] = React.useState(initialValues);
-    const [image, setImage] = useState(null);
     const hideProgressBarClass = "invisible progress";
     const animatedStripedProgressBarClass ="progress-bar progress-bar-striped progress-bar-animated"
-    const spiceLevelTags = ["ZERO SPICY","MILD","SPICY", "HOT", "BEYOND HOT"];
-    const getSpiceLabelIndex =(spiceLevel, spiceLevelTags) => {
-        return Math.floor(spiceLevel / (100 / spiceLevelTags.length));
-    }
 
-    const peppers = (x) => {
-        x = x < spiceLevelTags.length ? x : (spiceLevelTags.length - 1);
-        return [...Array(x)].map((e, i) => <i className="fa fa-pepper-hot"/>)
-    }
-
+    //States
+    const [image, setImage] = useState(null);
+    const [menu, setMenu] = React.useState(initialValues);
     const [progressBarClass, setProgressBarClass] = useState(hideProgressBarClass);
     const [progressBarValue, setProgressBarValue] = useState(1);
     const [progressBarAnimationClass, setProgressBarAnimationClass] = useState(animatedStripedProgressBarClass);
     const [orderPlacementDateTime, setOrderPlacementDateTime] = useState();
     const [orderDeliveryDateTime, setOrderDeliveryDateTime] = useState();
     const [spiceLevel, setSpiceLevel] = useState(0);
-    const [spiceLevelLabel, setSpiceLevelLabel] = useState(spiceLevelTags[getSpiceLabelIndex(spiceLevel, spiceLevelTags)]);
     const [chefRecommended, setChefRecommended] = useState(false);
     const [todaySpecial, setTodaySpecial] = useState(false);
+    const [maxQuantity, setMaxQuantity] = useState(20);
 
 
     const handleInputChange = e => {
@@ -164,6 +156,12 @@ const AddMenuForm = props => {
                        onChange={handleInputChange}/>
             </div>
         </div>
+        <div className="form-group">
+            <label htmlFor="spiceLevel"> Maximum Quantity allowed per Order: <strong> {maxQuantity} </strong> Portions </label>
+            <input type="range" name="spiceLevel" className="form-control-range" max="100" onChange={e => {
+                setMaxQuantity(parseInt(e.target.value));
+            }} defaultValue={maxQuantity}/>
+        </div>
         <div className="form-group row">
             <label htmlFor="orderPlaceDateTime" className="col-sm-4 col-form-label"> Enter Date and Time till order could be placed. </label>
             <div className="col-sm-8">
@@ -203,12 +201,11 @@ const AddMenuForm = props => {
             </div>
         </div>
         <div className="form-group">
-            <label htmlFor="spiceLevel"> Spice Level <strong> {spiceLevelLabel} {peppers(getSpiceLabelIndex(spiceLevel, spiceLevelTags))} </strong> </label>
-            <input type="range" name="spiceLevel" className="form-control-range"
+            <label htmlFor="spiceLevel"> Spice Level <SpiceLevel level={spiceLevel}/> </label>
+            <input type="range" name="spiceLevel" className="form-control-range" max={SETTINGS.MENU.SPICE_LEVEL_LABELS.length - 1}
                    id="spiceLevel" value={spiceLevel}
                    onChange={e => {
                         setSpiceLevel(parseInt(e.target.value));
-                        setSpiceLevelLabel(spiceLevelTags[getSpiceLabelIndex(spiceLevel, spiceLevelTags)]);
                         handleInputChange(e)
                     }}/>
         </div>

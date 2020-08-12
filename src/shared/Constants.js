@@ -58,6 +58,10 @@ export const SETTINGS = {
             10: [9],
             11: [10],
         }
+    },
+    MENU: {
+        SPICE_LEVEL_LABELS: ["Zero Spicy", "Mild", "Spicy", "Hot", "Burning Hot"],
+        SPICE_LEVEL_COLORS: ["008f00", "b05000", "c04000", "e02000", "ff0000"]
     }
 
 }
