@@ -65,16 +65,17 @@ const OrderMenuForm = (props) => {
     }
 
     const handleSelectedItem = (menuItem) => {
-        menuItem.checked = !menuItem.checked;
         let newSelectedItems = order.selectedItems;
         let newTotal = 0;
         let indexOfItem = newSelectedItems.map(i => i.id).indexOf(menuItem.id);
-        if (indexOfItem === -1 && menuItem.checked) {
+        if (indexOfItem === -1 && (menuItem.checked || menuItem.portions !== 1)) {
             newSelectedItems.push(menuItem);
         } else if (indexOfItem >= 0 && menuItem.checked === false) {
             newSelectedItems.splice(indexOfItem, 1);
+        } else if (newSelectedItems[indexOfItem].id === menuItem.id && menuItem.checked
+            && newSelectedItems[indexOfItem].portions !== menuItem.portions) {
+            newSelectedItems[indexOfItem].portions = menuItem.portions;
         }
-        debugger;
         newTotal = newSelectedItems.map(i => (i.price * i.portions)).reduce((p, c) => p + c, newTotal);
         const newOrder = {...order, total: newTotal, selectedItems: newSelectedItems};
         setOrder(newOrder);
@@ -148,7 +149,7 @@ const OrderMenuForm = (props) => {
                             <MenuItem
                                 item={menuItem} id={menuItem.id}
                                 key={menuItem.id}
-                                onChange={() => handleSelectedItem}
+                                onChange={(ref) => {handleSelectedItem(ref)}}
                             />
                         )
                     }
