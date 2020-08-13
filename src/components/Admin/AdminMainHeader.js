@@ -1,6 +1,6 @@
 import React from "react";
 
-function ConsumerMainHeader() {
+function AdminMainHeader() {
     return <div className="jumbotron jumbotron-fluid">
         <div className="container">
             <h1 className="display-4 text-center">Snack Shack</h1>
@@ -13,4 +13,4 @@ function ConsumerMainHeader() {
     </div>;
 }
 
-export default ConsumerMainHeader;
+export default AdminMainHeader;

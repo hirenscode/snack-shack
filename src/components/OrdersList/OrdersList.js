@@ -45,8 +45,6 @@ const OrdersList = () => {
                 console.debug("Orders flow was successfully updated");
             })
             .catch(err => {
-                // setMessage("There was some error updating order flow, your order was placed successfully, but sequence of order might be disturbed!");
-                // setShowAlert(showAlertErrorClass);
                 window.scrollTo(0, 0);
                 console.log(err)
             });
@@ -60,9 +58,6 @@ const OrdersList = () => {
                 console.debug("Orders was successfully updated");
                 retrieveOrders();
             }).catch(err => {
-            // setMessage("There was some error updating order flow, your order was placed successfully, but sequence of order might be disturbed!");
-            // setShowAlert(showAlertErrorClass);
-            // window.scrollTo(0, 0);
             console.log(err)
         });
     }

@@ -1,8 +1,8 @@
 import MainHeader from "../MainHeader";
 import React from "react";
-import AddMenuForm from "../../components/add-menu/AddMenuForm";
 import Header from "../Header";
 import Footer from "../Footer";
+import AddMenuForm from "../../components/AddMenu/AddMenuForm";
 
 function AddMenuView() {
     return <>

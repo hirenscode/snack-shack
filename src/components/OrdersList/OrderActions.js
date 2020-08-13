@@ -1,5 +1,4 @@
 import {SETTINGS} from "../../shared/Constants";
-import * as PropTypes from "prop-types";
 import React from "react";
 
 function OrderActions(props) {
@@ -16,11 +15,5 @@ function OrderActions(props) {
         </label>
     </div>;
 }
-
-OrderActions.propTypes = {
-    order: PropTypes.any,
-    statusId: PropTypes.any,
-    onChange: PropTypes.func
-};
 
 export default OrderActions;

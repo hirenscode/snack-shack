@@ -1,10 +1,8 @@
 import React from "react";
-import AddMenuView from "../shared/views/AddMenuView";
-import OrdersListView from "../shared/views/OrdersListView";
 import Route from "react-router-dom/es/Route";
 import Switch from "react-router-dom/es/Switch";
-import AdminOperations from "./AdminOperations";
-import Redirect from "react-router-dom/es/Redirect";
+import OrdersListView from "../../shared/Views/OrdersListView";
+import AddMenuView from "../../shared/Views/AddMenuView";
 
 function AdminHome({match}) {
     return <>

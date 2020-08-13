@@ -4,7 +4,7 @@ import firebase from "../../firebase";
 import PreparingMenuCard from "./PreparingMenuCard";
 import OrderMenuForm from "./OrderMenuForm";
 
-const OrderMenuView = (props) => {
+const PlaceOrder = (props) => {
     const initialOrder = {
         contact: "",
         name: "",
@@ -59,8 +59,6 @@ const OrderMenuView = (props) => {
 
     const handleInputChange = e => {
         let {name, value} = e.target;
-        // console.log("Name " + name);
-        // console.log("Value " + value);
         setOrder({
             ...order,
             [name]: value
@@ -138,7 +136,6 @@ const OrderMenuView = (props) => {
                 .add(newOrderFlow)
                 .then(() => {
                     let doNothing = true;
-                    // console.debug("Orders flow was successfully updated");
                 })
                 .catch(err => {
                     setMessage("There was some error updating order flow, your order was placed successfully, but sequence of order might be disturbed!");
@@ -169,4 +166,4 @@ const OrderMenuView = (props) => {
     </>;
 }
 
-export default OrderMenuView;
+export default PlaceOrder;

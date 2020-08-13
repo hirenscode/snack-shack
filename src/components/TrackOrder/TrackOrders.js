@@ -5,15 +5,13 @@ import TrackOrderCard from "./TrackOrderCard";
 const TrackOrders = (props) => {
 
     const [trackId, setTrackId] = useState(null);
-    const [trackBy, setTrackBy] = useState("");  //email
+    const [trackBy, setTrackBy] = useState("");
     const [message, setMessage] = useState("Please use text field to track your order");
     const [messageClass, setMessageClass] = useState("alert alert-warning show");
     const [orders, setOrders] = useState([]);
 
     const handleInputChange = e => {
         let {name, value} = e.target;
-        // console.log("Name " + name);
-        // console.log("Value " + value);
         setTrackId(value)
         setTrackBy(name)
     }
@@ -42,7 +40,7 @@ const TrackOrders = (props) => {
     }
 
     let cardOrMessage;
-    if (orders.length >= 0) {
+    if (orders.length > 0) {
         cardOrMessage = <table className="table table-hover">
             {orders.map(order => (
                 <TrackOrderCard order={order}/>
@@ -54,7 +52,6 @@ const TrackOrders = (props) => {
     return<>
     <div className={messageClass} role="alert"> {message} </div>
         <form>
-            {/*onSubmit={trackOrder}>*/}
             <div className="form-group">
                 <label htmlFor="contact">Track by Phone Number</label>
                 <input type="phone" className="form-control" id="contact" name="contact"

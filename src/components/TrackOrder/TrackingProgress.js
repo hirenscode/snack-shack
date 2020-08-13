@@ -11,7 +11,6 @@ const TrackingProgress = (props) => {
             .firestore()
             .collection("orders_flow")
             .where("orderId", "==", orderId)
-            // .orderBy("lastUpdateDate")
             .onSnapshot((snapshot) => {
                 const newOrdersFlow = snapshot.docs.map((doc) => ({
                     id: doc.id,
@@ -27,7 +26,6 @@ const TrackingProgress = (props) => {
                 <span className="order-status"> {SETTINGS.ORDER.STATUS[orderStatus].TEXT} </span>
                 <ul id="progress-bar">
                     {
-                    // Object.keys(SETTINGS.ORDER.STATUS).map(key => (
                         orderFlow.map(flow => (
                         <li>
                             <span className={flow.statusId <= orderStatus ? "processing-box bg-success" : "processing-box bg-dark text-white"}>
@@ -44,15 +42,3 @@ const TrackingProgress = (props) => {
 }
 
 export default TrackingProgress;
-
-/**
- *
- * <ul id="progressbar">
- <li className="step0 active" id="step1">PLACED</li>
- <li className="step0 active" id="step2">ACCEPTED</li>
- <li className="step0 text-muted" id="step3">IN PREPARATION</li>
- <li className="step0 text-muted" id="step4">OUT FOR DELIVERY</li>
- <li className="step0 text-muted" id="step5">DELIVERED</li>
- </ul>
- *
- * */

@@ -1,20 +1,20 @@
-import React from "react";
 import MainHeader from "../MainHeader";
-import Header from "../Header";
+import React from "react";
 import Footer from "../Footer";
-import OrderMenuView from "../../components/place-order/OrderMenuView";
+import Header from "../Header";
+import TrackOrders from "../../components/TrackOrder/TrackOrders";
 
-function Home() {
+function TrackOrdersView() {
     return <>
         <Header/>
         <main role="main">
             <MainHeader/>
             <div className="container">
-                <OrderMenuView/>
+                <TrackOrders/>
             </div>
         </main>
         <Footer/>
-        </>;
+    </>;
 }
 
-export default Home;
+export default TrackOrdersView;
