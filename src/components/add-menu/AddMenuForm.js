@@ -12,10 +12,13 @@ const AddMenuForm = props => {
         description: "",
         imageSource: "",
         price: "",
-        dateTime: null
     }
     const hideProgressBarClass = "invisible progress";
     const animatedStripedProgressBarClass ="progress-bar progress-bar-striped progress-bar-animated"
+    const showAlertSuccessClass = "alert alert-success alert-dismissible fade show";
+    const showAlertErrorClass = "alert alert-danger alert-dismissible fade show";
+    const showAlertWarningClass = "alert alert-warning alert-dismissible fade show";
+    const hideAlertClass = "alert collapse";
 
     //States
     const [image, setImage] = useState(null);
@@ -29,7 +32,10 @@ const AddMenuForm = props => {
     const [chefRecommended, setChefRecommended] = useState(false);
     const [todaySpecial, setTodaySpecial] = useState(false);
     const [maxQuantity, setMaxQuantity] = useState(20);
-
+    const [message, setMessage] = useState("");
+    const [showAlert, setShowAlert] = useState(hideAlertClass);
+    const [warning, setWarning] = useState("");
+    const [imageIsUploaded, setImageIsUploaded] = useState(false);
 
     const handleInputChange = e => {
         let {name, value} = e.target;
@@ -54,7 +60,7 @@ const AddMenuForm = props => {
     const handleFileUpload = (e) => {
         let today = new Date();
         let todayYYYYMMDD = `${today.getUTCFullYear()}_${today.getUTCMonth()}_${today.getUTCDate()}`;
-        let nowHHMMSSSS = `${today.getUTCHours()}_${today.getUTCMinutes()}_${today.getUTCSeconds()}`
+        let nowHHMMSSSS = `${today.getUTCHours()}_${today.getUTCMinutes()}_${today.getUTCSeconds()}`;
         let metadata = {
             contentType: 'image/jpeg'
         };
@@ -69,6 +75,8 @@ const AddMenuForm = props => {
                 setProgressBarValue(progress);
                 if (progress === 100) {
                     setProgressBarAnimationClass("progress-bar progress-bar-striped");
+                } else {
+                    setImageIsUploaded(false);
                 }
             }, (error) => {
                 console.error(error)
@@ -93,43 +101,90 @@ const AddMenuForm = props => {
                     setMenu({
                         ...menu,
                         "imageSource": downloadURL
-                    })
+                    });
+                    setImageIsUploaded(true);
                     // console.log("Upload Completed at " + downloadURL)
                 });
             });
     }
 
+    const validate = () => {
+        let isValid = true;
+        let hasWarning = false;
+
+        if (menu.imageSource === null || menu.imageSource === "") {
+            isValid = false;
+            setMessage(`${message} \n Please upload Image for the Menu.`);
+        } else if (menu.imageSource !== null && menu.imageSource !== "" && !imageIsUploaded) {
+            hasWarning = true;
+            setMessage(`${message} \n You might have forgot to click on Upload button after browsing image from local device, this might result in a Menu item being displayed without an image for the end user.`);
+        }
+
+        if (menu.placeOrderBy === null || menu.placeOrderBy === "") {
+            isValid = false;
+            setMessage(`${message} \n Please enter Order By for the Menu.`);
+        }
+
+        if (menu.etaDeliveryBy === null || menu.etaDeliveryBy === "") {
+            isValid = false;
+            setMessage(`${message} \n Please enter Estimated Time of Delivery Date for the Menu.`);
+        }
+
+        debugger;
+
+        if (!isValid) {
+            setShowAlert(showAlertErrorClass);
+            window.scrollTo(0, 0);
+        }else if (isValid && hasWarning) {
+            setShowAlert(showAlertWarningClass);
+            window.scrollTo(0, 0);
+        } else {
+            setShowAlert(hideAlertClass);
+        }
+
+        return isValid && !hasWarning;
+    }
+
     const addMenu = e => {
         e.preventDefault();
         e.persist();
-        firebase.firestore().collection("menus").add(menu)
-            .then((docRef) => {
-                e.target.reset();
-                setProgressBarValue(0);
-                setProgressBarClass(hideProgressBarClass);
-                // setMessage("Order Placed successfully!");
-                // setShowAlert(showAlertSuccessClass);
-                window.scrollTo(0, 0);
-                console.log("Added menu");
-            })
-            .catch(err => {
-                setProgressBarValue(0);
-                setProgressBarClass(hideProgressBarClass);
-                // setMessage("There was some error placing order, please try again!");
-                // setShowAlert(showAlertErrorClass);
-                window.scrollTo(0, 0);
-                console.log(err)
-            });
+
+        const valid = validate();
+
+        if (valid) {
+            firebase.firestore().collection("menus").add(menu)
+                .then((docRef) => {
+                    e.target.reset();
+                    setProgressBarValue(0);
+                    setProgressBarClass(hideProgressBarClass);
+                    setMessage("Menu Item added/updated successfully!");
+                    setShowAlert(showAlertSuccessClass);
+                    window.scrollTo(0, 0);
+                })
+                .catch(err => {
+                    setProgressBarValue(0);
+                    setProgressBarClass(hideProgressBarClass);
+                    window.scrollTo(0, 0);
+                    console.log(err)
+                });
+        }
     }
 
-    return <form onSubmit={addMenu}>
+    return <>
+        <div className={showAlert} role="alert">
+            {message}
+            <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form onSubmit={addMenu}>
         <div className="form-group">
             <input placeholder="Menu Item Name" className="form-control" id="title" name="title"
-                   onChange={handleInputChange}/>
+                   onChange={handleInputChange} required/>
         </div>
         <div className="form-group">
             <input placeholder="Menu Description" className="form-control" id="description" name="description"
-                   onChange={handleInputChange}/>
+                   onChange={handleInputChange} required/>
         </div>
         <div className={progressBarClass}>
             <div className={progressBarAnimationClass} role="progressbar"
@@ -139,7 +194,7 @@ const AddMenuForm = props => {
         <div className="input-group mb-3">
             <div className="custom-file">
                 <input type="file" className="form-control custom-file-input" id="imageSource" name="imageSource"
-                       onChange={handleInputChange}/>
+                       onChange={handleInputChange} required/>
                 <label className="custom-file-label" htmlFor="imageSource"
                        aria-describedby="imageSource">Choose Menu Image</label>
             </div>
@@ -172,7 +227,7 @@ const AddMenuForm = props => {
                         setOrderPlacementDateTime(date);
                         setMenu({
                             ...menu,
-                            "placeOrderBy": date
+                            placeOrderBy: date
                         })
                     }}
                     timeInputLabel="Time:"
@@ -191,7 +246,7 @@ const AddMenuForm = props => {
                                 setOrderDeliveryDateTime(date);
                                 setMenu({
                                     ...menu,
-                                    "etaDeliveryBy": date
+                                    etaDeliveryBy: date
                                 })
                             }}
                             timeInputLabel="Time:"
@@ -230,7 +285,8 @@ const AddMenuForm = props => {
         <div className="form-group">
             <button type="submit" className="btn btn-primary btn-lg btn-block" onSubmit={addMenu}>Add Menu </button>
         </div>
-    </form>;
+    </form>
+    </>;
 }
 
 export default AddMenuForm;
