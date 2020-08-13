@@ -12,8 +12,8 @@ const TrackOrders = (props) => {
 
     const handleInputChange = e => {
         let {name, value} = e.target;
-        console.log("Name " + name);
-        console.log("Value " + value);
+        // console.log("Name " + name);
+        // console.log("Value " + value);
         setTrackId(value)
         setTrackBy(name)
     }
