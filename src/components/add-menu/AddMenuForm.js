@@ -34,13 +34,12 @@ const AddMenuForm = props => {
     const [maxQuantity, setMaxQuantity] = useState(20);
     const [message, setMessage] = useState("");
     const [showAlert, setShowAlert] = useState(hideAlertClass);
-    const [warning, setWarning] = useState("");
     const [imageIsUploaded, setImageIsUploaded] = useState(false);
 
     const handleInputChange = e => {
         let {name, value} = e.target;
-        console.log("Name " + name);
-        console.log("Value " + value);
+        // console.log("Name " + name);
+        // console.log("Value " + value);
         if (e.target.files && e.target.files[0]) {
             const fileName = e.target.files[0].name;
             e.target.nextElementSibling.innerText = fileName;
@@ -129,8 +128,6 @@ const AddMenuForm = props => {
             isValid = false;
             setMessage(`${message} \n Please enter Estimated Time of Delivery Date for the Menu.`);
         }
-
-        debugger;
 
         if (!isValid) {
             setShowAlert(showAlertErrorClass);
