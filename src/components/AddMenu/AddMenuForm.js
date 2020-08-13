@@ -3,7 +3,7 @@ import {SETTINGS} from "../../shared/Constants";
 import * as firebase from "firebase";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import SpiceLevel from "../place-order/SpiceLevel";
+import SpiceLevel from "../../shared/SpiceLevel";
 
 const AddMenuForm = props => {
     const storageRef = firebase.storage();
@@ -38,8 +38,6 @@ const AddMenuForm = props => {
 
     const handleInputChange = e => {
         let {name, value} = e.target;
-        // console.log("Name " + name);
-        // console.log("Value " + value);
         if (e.target.files && e.target.files[0]) {
             const fileName = e.target.files[0].name;
             e.target.nextElementSibling.innerText = fileName;
@@ -67,7 +65,7 @@ const AddMenuForm = props => {
             .ref(`images/menu-item/${todayYYYYMMDD}/${nowHHMMSSSS}_${menu.title}`)
             .put(image, metadata);
 
-        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
             (snapshot) => {
                 let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                 setProgressBarClass("progress");
@@ -79,8 +77,6 @@ const AddMenuForm = props => {
                 }
             }, (error) => {
                 console.error(error)
-                // A full list of error codes is available at
-                // https://firebase.google.com/docs/storage/web/handle-errors
                 switch (error.code) {
                     case 'storage/unauthorized':
                         // User doesn't have permission to access the object
@@ -95,14 +91,12 @@ const AddMenuForm = props => {
                         break;
                 }
             }, () => {
-                // Upload completed successfully, now we can get the download URL
                 uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
                     setMenu({
                         ...menu,
                         "imageSource": downloadURL
                     });
                     setImageIsUploaded(true);
-                    // console.log("Upload Completed at " + downloadURL)
                 });
             });
     }

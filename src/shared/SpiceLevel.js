@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {SETTINGS} from "../../shared/Constants";
+import {SETTINGS} from "./Constants";
 
 const SpiceLevel = (props) => {
     const [level, setLevel] = useState(props.level);

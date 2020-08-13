@@ -1,8 +1,8 @@
 import React from "react";
-import OrdersList from "../../components/orders-list/OrdersList";
 import Header from "../Header";
 import Footer from "../Footer";
-import AdminMainHeader from "../../admin/AdminMainHeader";
+import OrdersList from "../../components/OrdersList/OrdersList";
+import AdminMainHeader from "../../components/Admin/AdminMainHeader";
 
 function OrdersListView() {
     return <>

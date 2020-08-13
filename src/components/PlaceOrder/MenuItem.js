@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {SETTINGS} from "../../shared/Constants";
-import SpiceLevel from "./SpiceLevel";
+import SpiceLevel from "../../shared/SpiceLevel";
 import ChefRecommended from "./ChefRecommended";
 import TodaySpecial from "./TodaySpecial";
 
@@ -12,7 +12,6 @@ const MenuItem = props => {
     const handleToggle = (event) => {
         const itemObject = {...menuItem, checked: event.target.checked, portions: 1};
         setMenuItem(itemObject);
-        // props.checked = e.target.checked;
         props.onChange(itemObject);
     }
 
