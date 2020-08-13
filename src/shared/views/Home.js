@@ -2,7 +2,7 @@ import React from "react";
 import MainHeader from "../MainHeader";
 import Header from "../Header";
 import Footer from "../Footer";
-import OrderMenuForm from "../../components/place-order/OrderMenuForm";
+import OrderMenuView from "../../components/place-order/OrderMenuView";
 
 function Home() {
     return <>
@@ -10,7 +10,7 @@ function Home() {
         <main role="main">
             <MainHeader/>
             <div className="container">
-                <OrderMenuForm/>
+                <OrderMenuView/>
             </div>
         </main>
         <Footer/>
