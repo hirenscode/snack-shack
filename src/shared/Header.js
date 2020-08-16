@@ -29,6 +29,7 @@ function Header() {
                         <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <Link className="dropdown-item" to="/admin/orders"> Orders </Link>
                             <Link className="dropdown-item" to="/admin/add-new-menu"> Add New Menu </Link>
+                            <Link className="dropdown-item" to="/admin/all-menu-items"> All Menu Items </Link>
                         </div>
                         {/*<a className="nav-link" href="/admin/"> Admin </a>*/}
                     </li>
