@@ -15,14 +15,36 @@ const AllMenuItems = (props) => {
                     id: doc.id,
                     ...doc.data()
                 }));
-                // newMenus.map(i => Object.keys(i).map(k => console.log(k, i[k])));
-                setMenuItems(newMenus);
                 setMenuItems(newMenus.map(i => {
-                    return {...i,
-                        placeOrderByString: i.placeOrderBy === undefined ? "None" : i.placeOrderBy.toDate().toLocaleString()}}));
+                    return {
+                        ...i,
+                        placeOrderByString: i.placeOrderBy === undefined ? "None" : i.placeOrderBy.toDate().toLocaleString()
+                    }
+                }));
             }));
     }, [])
 
+
+    const handleEdit = (e) => {
+        const itemId = e.target.dataset.id;
+        const item = menuItems.filter(i => i.id === itemId);
+
+    }
+
+    const handleDelete = (e) => {
+        const itemId = e.target.dataset.id;
+        firebase.firestore()
+            .collection("menus")
+            .doc(itemId)
+            .delete()
+            .then(() => {
+                    console.log(menuItems);
+                }
+            ).catch(err => {
+                console.error(err);
+            });
+
+    }
 
     return <table className="table">
         <thead className="thead-dark">
@@ -39,8 +61,14 @@ const AllMenuItems = (props) => {
             <tr key={item.id}>
                 <td scope="row">
                     <div className="btn-group" role="group" aria-label="Functions">
-                        <button type="button" className="btn btn-primary"><i className="fa fa-edit"/></button>
-                        <button type="button" className="btn btn-danger"><i className="fa fa-trash-alt"/></button>
+                        <button type="button"
+                                className="btn btn-primary"
+                                data-id={item.id}
+                                onClick={handleEdit}><i className="fa fa-edit"/></button>
+                        <button type="button"
+                                className="btn btn-danger"
+                                data-id={item.id}
+                                onClick={handleDelete}><i className="fa fa-trash-alt"/></button>
                     </div>
                 </td>
                 <td> {item.title} </td>
@@ -48,7 +76,7 @@ const AllMenuItems = (props) => {
                 <td> {item.price} </td>
                 <td>
                     <ChefRecommended recommendation={item.chefRecommended}/> |
-                    <TodaySpecial special={item.todaySpecial}/>  |
+                    <TodaySpecial special={item.todaySpecial}/> |
                     <SpiceLevel level={item.spiceLevel}/>
                 </td>
             </tr>)
