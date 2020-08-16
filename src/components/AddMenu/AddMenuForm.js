@@ -113,14 +113,26 @@ const AddMenuForm = props => {
             setMessage(`${message} \n You might have forgot to click on Upload button after browsing image from local device, this might result in a Menu item being displayed without an image for the end user.`);
         }
 
+        let placeOrderByValid = false;
         if (menu.placeOrderBy === null || menu.placeOrderBy === "") {
             isValid = false;
             setMessage(`${message} \n Please enter Order By for the Menu.`);
+        } else {
+            placeOrderByValid = true;
         }
 
+        let etaDeliveryByValid = false;
         if (menu.etaDeliveryBy === null || menu.etaDeliveryBy === "") {
             isValid = false;
             setMessage(`${message} \n Please enter Estimated Time of Delivery Date for the Menu.`);
+        } else {
+            etaDeliveryByValid = true;
+        }
+
+        if (placeOrderByValid && etaDeliveryByValid
+            && menu.etaDeliveryBy.toDate().getMilliseconds() <= menu.placeOrderBy.toDate().getMilliseconds()) {
+            isValid = false;
+            setMessage(`${message} \n Please enter ETA Date Time which is after Order By Date Time.`);
         }
 
         if (!isValid) {
