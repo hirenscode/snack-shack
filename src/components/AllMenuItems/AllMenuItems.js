@@ -3,6 +3,7 @@ import firebase from "../../firebase";
 import ChefRecommended from "../../shared/ChefRecommended";
 import TodaySpecial from "../../shared/TodaySpecial";
 import SpiceLevel from "../../shared/SpiceLevel";
+import {Link} from "react-router-dom";
 
 const AllMenuItems = (props) => {
     const [menuItems, setMenuItems] = useState([]);
@@ -61,10 +62,9 @@ const AllMenuItems = (props) => {
             <tr key={item.id}>
                 <td scope="row">
                     <div className="btn-group" role="group" aria-label="Functions">
-                        <button type="button"
-                                className="btn btn-primary"
-                                data-id={item.id}
-                                onClick={handleEdit}><i className="fa fa-edit"/></button>
+                        <Link className="btn btn-primary"
+                              to={`/admin/update-menu-item?menuItemId=${item.id}`}
+                              role="button"> <i className="fa fa-edit"/> </Link>
                         <button type="button"
                                 className="btn btn-danger"
                                 data-id={item.id}
