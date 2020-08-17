@@ -1,4 +1,10 @@
 export const SETTINGS = {
+    APP: {
+        NAME: "Shack Snack",
+        SUBTITLE: "Happiness is Homemade",
+        LOGO: "https://firebasestorage.googleapis.com/v0/b/vishals-snack-shack.appspot.com/o/images%2Flogo.png?alt=media&token=d45409cc-4051-4b65-931c-7fe1f318d7d9",
+        FAVICON: "https://firebasestorage.googleapis.com/v0/b/vishals-snack-shack.appspot.com/o/images%2Ffavicon.ico?alt=media&token=011c1607-5cb0-4302-8893-105ed4f04677"
+    },
     CURRENCY : {
         SHORT: "INR",
         LONG : "Rupees",
