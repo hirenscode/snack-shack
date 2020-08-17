@@ -61,7 +61,9 @@ export const SETTINGS = {
     },
     MENU: {
         SPICE_LEVEL_LABELS: ["Zero Spicy", "Mild", "Spicy", "Hot", "Burning Hot"],
-        SPICE_LEVEL_COLORS: ["008f00", "b05000", "c04000", "e02000", "ff0000"]
+        SPICE_LEVEL_COLORS: ["008f00", "b05000", "c04000", "e02000", "ff0000"],
+        PREPARING_IMAGE: "https://firebasestorage.googleapis.com/v0/b/vishals-snack-shack.appspot.com/o/images%2Fpreparing-menu%2FPreparing1.jpg?alt=media&token=250815e8-1b06-47d5-b3c3-91657085a6f0",
+        DEFAULT_MENU_IMAGE: "https://firebasestorage.googleapis.com/v0/b/vishals-snack-shack.appspot.com/o/images%2Fmenu-item%2Fdefault_menu_item.png?alt=media&token=40042830-f5e3-4f4f-ae3f-86a8e55b2e30"
     }
 
 }
