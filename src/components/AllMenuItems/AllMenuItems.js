@@ -25,13 +25,6 @@ const AllMenuItems = (props) => {
             }));
     }, [])
 
-
-    const handleEdit = (e) => {
-        const itemId = e.target.dataset.id;
-        const item = menuItems.filter(i => i.id === itemId);
-
-    }
-
     const handleDelete = (e) => {
         const itemId = e.target.dataset.id;
         firebase.firestore()

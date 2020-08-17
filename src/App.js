@@ -1,11 +1,15 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import Home from "./shared/Views/Home";
-import TrackOrdersView from "./shared/Views/TrackOrdersView";
+import Home from "./shared/views/Home";
+import TrackOrdersView from "./shared/views/TrackOrdersView";
 import AdminHome from "./components/Admin/AdminHome";
+import {SETTINGS} from "./shared/Constants";
 
 function App() {
+    useEffect(() => {
+        document.title = `${SETTINGS.APP.NAME}`;
+    })
 
     return (
         <>
