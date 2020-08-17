@@ -1,10 +1,12 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {SETTINGS} from "./Constants";
 
 function Header() {
     return <header>
         <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a className="navbar-brand" href="#"> Snack Shack </a>
+            <img class="rounded mx-auto d-block" alt="logo" src={SETTINGS.APP.LOGO} style={{width: "2%"}}/>
+            <a className="navbar-brand" href="#"> {SETTINGS.APP.NAME} </a>
             <button className="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
                     aria-expanded="false"
@@ -15,11 +17,9 @@ function Header() {
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item active">
                         <Link className="nav-link" to="/">Home <span className="sr-only">(current)</span> </Link>
-                        {/*<a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>*/}
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link" to="/track-orders">Track Order</Link>
-                        {/*<a className="nav-link" href="/track-orders/">Track Order</a>*/}
                     </li>
                     <li className="nav-item dropdown">
                         <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
