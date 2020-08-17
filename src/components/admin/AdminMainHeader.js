@@ -1,5 +1,5 @@
 import React from "react";
-import {SETTINGS} from "../../shared/Constants";
+import {SETTINGS} from "../../common/Constants";
 
 function AdminMainHeader() {
     return <div className="jumbotron jumbotron-fluid">

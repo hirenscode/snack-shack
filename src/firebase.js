@@ -3,13 +3,13 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAElZmctppPqFyUcPVwfmx2kaEV5fs9Zj0",
-    authDomain: "vishals-snack-shack.firebaseapp.com",
-    databaseURL: "https://vishals-snack-shack.firebaseio.com",
-    projectId: "vishals-snack-shack",
-    storageBucket: "vishals-snack-shack.appspot.com",
-    messagingSenderId: "24993547713",
-    appId: "1:24993547713:web:4c23f4f1bf20c53ac09b40"
+    apiKey: "AIzaSyDudZwUmnLW9bhjVNKvAaSFKOIq-qtOt8E",
+    authDomain: "snack-shack-test.firebaseapp.com",
+    databaseURL: "https://snack-shack-test.firebaseio.com",
+    projectId: "snack-shack-test",
+    storageBucket: "snack-shack-test.appspot.com",
+    messagingSenderId: "645218517573",
+    appId: "1:645218517573:web:45ac65a77e13c0ca38592c"
 };
 
 firebase.initializeApp(firebaseConfig);

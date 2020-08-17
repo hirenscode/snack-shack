@@ -2,8 +2,8 @@ export const SETTINGS = {
     APP: {
         NAME: "Snack Shack",
         SUBTITLE: "Happiness is Homemade",
-        LOGO: "https://firebasestorage.googleapis.com/v0/b/vishals-snack-shack.appspot.com/o/images%2Flogo.png?alt=media&token=d45409cc-4051-4b65-931c-7fe1f318d7d9",
-        FAVICON: "https://firebasestorage.googleapis.com/v0/b/vishals-snack-shack.appspot.com/o/images%2Ffavicon.ico?alt=media&token=011c1607-5cb0-4302-8893-105ed4f04677"
+        LOGO: "https://firebasestorage.googleapis.com/v0/b/snack-shack-test.appspot.com/o/images%2Flogo.png?alt=media&token=696c0cad-d1b6-4bc3-97e8-36e1550babb3",
+        FAVICON: "https://firebasestorage.googleapis.com/v0/b/snack-shack-test.appspot.com/o/images%2Ffavicon.ico?alt=media&token=cc84fc91-49a5-4dd0-8704-6ce1da2642d5"
     },
     CURRENCY : {
         SHORT: "INR",
@@ -68,8 +68,8 @@ export const SETTINGS = {
     MENU: {
         SPICE_LEVEL_LABELS: ["Zero Spicy", "Mild", "Spicy", "Hot", "Burning Hot"],
         SPICE_LEVEL_COLORS: ["008f00", "b05000", "c04000", "e02000", "ff0000"],
-        PREPARING_IMAGE: "https://firebasestorage.googleapis.com/v0/b/vishals-snack-shack.appspot.com/o/images%2Fpreparing-menu%2FPreparing1.jpg?alt=media&token=250815e8-1b06-47d5-b3c3-91657085a6f0",
-        DEFAULT_MENU_IMAGE: "https://firebasestorage.googleapis.com/v0/b/vishals-snack-shack.appspot.com/o/images%2Fmenu-item%2Fdefault_menu_item.png?alt=media&token=40042830-f5e3-4f4f-ae3f-86a8e55b2e30"
+        PREPARING_IMAGE: "https://firebasestorage.googleapis.com/v0/b/snack-shack-test.appspot.com/o/images%2Fpreparing-menu%2FPreparing1.jpg?alt=media&token=d7e570a2-4665-4ad8-9362-4c3c0a6bf413",
+        DEFAULT_MENU_IMAGE: "https://firebasestorage.googleapis.com/v0/b/snack-shack-test.appspot.com/o/images%2Fmenu-item%2Fdefault_menu_item.png?alt=media&token=7a617d25-b6f2-4943-bbc4-e180c87b36c0"
     }
 
 }

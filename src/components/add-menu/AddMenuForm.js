@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
-import {SETTINGS} from "../../shared/Constants";
+import {SETTINGS} from "../../common/Constants";
 import * as firebase from "firebase";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import SpiceLevel from "../../shared/SpiceLevel";
+import SpiceLevel from "../../common/SpiceLevel";
 
 const AddMenuForm = props => {
     const editMode = props.editMode ? props.editMode : false;
@@ -135,7 +135,7 @@ const AddMenuForm = props => {
         }
 
         let placeOrderByValid = false;
-        if (menu.placeOrderBy === null || menu.placeOrderBy === "") {
+        if (menu.placeOrderBy === "") {
             isValid = false;
             setMessage(`${message} \n Please enter Order By for the Menu.`);
         } else {
@@ -144,7 +144,7 @@ const AddMenuForm = props => {
 
         let etaDeliveryByValid = false;
         debugger;
-        if (menu.etaDeliveryBy === null || menu.etaDeliveryBy === "") {
+        if (menu.etaDeliveryBy === "") {
             isValid = false;
             setMessage(`${message} \n Please enter Estimated Time of Delivery Date for the Menu.`);
         } else {

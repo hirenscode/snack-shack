@@ -1,4 +1,4 @@
-import {SETTINGS} from "../../shared/Constants";
+import {SETTINGS} from "../../common/Constants";
 import React from "react";
 
 function OrderActions(props) {

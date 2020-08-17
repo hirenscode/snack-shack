@@ -2,6 +2,12 @@
 
 .idea/
 package-lock.json
+.firebase/
+.firebaserc
+firebase.json
+firestore.indexes.json
+firestore.rules
+storage.rules
 
 # dependencies
 /node_modules

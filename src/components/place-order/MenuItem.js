@@ -1,8 +1,8 @@
 import React, {useState} from "react";
-import {SETTINGS} from "../../shared/Constants";
-import SpiceLevel from "../../shared/SpiceLevel";
-import ChefRecommended from "../../shared/ChefRecommended";
-import TodaySpecial from "../../shared/TodaySpecial";
+import {SETTINGS} from "../../common/Constants";
+import SpiceLevel from "../../common/SpiceLevel";
+import ChefRecommended from "../../common/ChefRecommended";
+import TodaySpecial from "../../common/TodaySpecial";
 
 const MenuItem = props => {
     const [menuItem, setMenuItem] = useState(props.item);

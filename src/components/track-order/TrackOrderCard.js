@@ -1,6 +1,6 @@
 import React from "react";
 import TrackingProgress from "./TrackingProgress";
-import {SETTINGS} from "../../shared/Constants";
+import {SETTINGS} from "../../common/Constants";
 
 const TrackOrderCard = (props) => {
 
