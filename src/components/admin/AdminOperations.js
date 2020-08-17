@@ -1,7 +1,7 @@
-import Header from "../../shared/Header";
+import Header from "../../common/Header";
 import AdminMainHeader from "./AdminMainHeader";
 import {Link} from "react-router-dom";
-import Footer from "../../shared/Footer";
+import Footer from "../../common/Footer";
 import React from "react";
 
 const AdminOperations = ({match}) => {

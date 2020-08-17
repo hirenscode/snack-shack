@@ -1,5 +1,5 @@
 import ListMenuItems from "./ListMenuItems";
-import {SETTINGS} from "../../shared/Constants";
+import {SETTINGS} from "../../common/Constants";
 import React from "react";
 
 function OrderMenuForm(props) {

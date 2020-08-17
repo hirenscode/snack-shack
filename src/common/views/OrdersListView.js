@@ -1,20 +1,20 @@
-import MainHeader from "../MainHeader";
 import React from "react";
 import Header from "../Header";
 import Footer from "../Footer";
-import AllMenuItems from "../../components/AllMenuItems/AllMenuItems";
+import AdminMainHeader from "../../components/admin/AdminMainHeader";
+import OrdersList from "../../components/orders-list/OrdersList";
 
-function AllMenuItemsView() {
+function OrdersListView() {
     return <>
         <Header/>
         <main role="main">
-            <MainHeader/>
+            <AdminMainHeader/>
             <div className="container">
-                <AllMenuItems/>
+                <OrdersList/>
             </div>
         </main>
         <Footer/>
     </>;
 }
 
-export default AllMenuItemsView;
+export default OrdersListView;

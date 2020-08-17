@@ -50,7 +50,7 @@ const TrackOrders = (props) => {
     }
 
     return<>
-    <div className={messageClass} role="alert"> {message} </div>
+        <div className={messageClass} role="alert"> {message} </div>
         <form>
             <div className="form-group">
                 <label htmlFor="contact">Track by Phone Number</label>
@@ -64,7 +64,6 @@ const TrackOrders = (props) => {
             </div>
         </form>
         {cardOrMessage}
-
     </>;
 }
 

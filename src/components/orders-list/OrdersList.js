@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import firebase from "../../firebase";
-import {SETTINGS} from "../../shared/Constants";
+import {SETTINGS} from "../../common/Constants";
 import OrderActions from "./OrderActions";
 
 

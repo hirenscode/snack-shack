@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
 import firebase from "../../firebase";
-import ChefRecommended from "../../shared/ChefRecommended";
-import TodaySpecial from "../../shared/TodaySpecial";
-import SpiceLevel from "../../shared/SpiceLevel";
+import ChefRecommended from "../../common/ChefRecommended";
+import TodaySpecial from "../../common/TodaySpecial";
+import SpiceLevel from "../../common/SpiceLevel";
 import {Link} from "react-router-dom";
 
 const AllMenuItems = (props) => {

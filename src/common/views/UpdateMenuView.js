@@ -1,9 +1,9 @@
 import Header from "../Header";
-import MainHeader from "../MainHeader";
-import AddMenuForm from "../../components/AddMenu/AddMenuForm";
+import AddMenuForm from "../../components/add-menu/AddMenuForm";
 import Footer from "../Footer";
 import React, {useState} from "react";
 import queryString from 'query-string'
+import AdminMainHeader from "../../components/admin/AdminMainHeader";
 
 function UpdateMenuView(props) {
     const menuItemId = useState(queryString.parse(props.location.search).menuItemId);
@@ -11,7 +11,7 @@ function UpdateMenuView(props) {
     return <>
         <Header/>
         <main role="main">
-            <MainHeader/>
+            <AdminMainHeader/>
             <div className="container">
                 <AddMenuForm editMode={true} menuItemId={menuItemId}/>
             </div>

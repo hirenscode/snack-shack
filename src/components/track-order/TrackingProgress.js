@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {SETTINGS} from "../../shared/Constants";
+import {SETTINGS} from "../../common/Constants";
 import firebase from "../../firebase";
 
 const TrackingProgress = (props) => {
