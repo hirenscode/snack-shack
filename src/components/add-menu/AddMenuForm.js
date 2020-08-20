@@ -157,6 +157,14 @@ const AddMenuForm = props => {
             setMessage(`${message} \n Please enter ETA Date Time which is after Order By Date Time.`);
         }
 
+        if (menu.price === "") {
+            isValid = false;
+            setMessage(`${message} \n Please enter Price for the menu.`);
+        } else if (isNaN(menu.price)) {
+            isValid = false;
+            setMessage(`${message} \n Price should be a number.`);
+        }
+
         if (!isValid) {
             setShowAlert(showAlertErrorClass);
             window.scrollTo(0, 0);
