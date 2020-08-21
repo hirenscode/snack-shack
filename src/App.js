@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import './App.css';
+import './App.scss';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import AdminHome from "./components/admin/AdminHome";
 import {SETTINGS} from "./common/Constants";
