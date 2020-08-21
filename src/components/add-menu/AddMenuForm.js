@@ -4,7 +4,29 @@ import * as firebase from "firebase";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import SpiceLevel from "../../common/SpiceLevel";
+import * as PropTypes from "prop-types";
 
+function DatePickerInput(props) {
+    return <div className="form-group row">
+        <label htmlFor="orderPlaceDateTime" className="col-sm-4 col-form-label"> Enter Date and Time till order
+            could be placed. </label>
+        <div className="col-sm-8">
+            <DatePicker className="form-control"
+                        disabledKeyboardNavigation
+                        selected={props.selected}
+                        onChange={props.onChange}
+                        timeInputLabel="Time:"
+                        dateFormat="MM/dd/yyyy h:mm aa"
+                        showTimeInput
+            />
+        </div>
+    </div>;
+}
+
+DatePickerInput.propTypes = {
+    selected: PropTypes.func,
+    onChange: PropTypes.func
+};
 const AddMenuForm = props => {
     const editMode = props.editMode ? props.editMode : false;
     const menuItemId = editMode ? props.menuItemId : null;
@@ -245,7 +267,7 @@ const AddMenuForm = props => {
                        onChange={handleInputChange} required value={menu.description}/>
             </div>
             <div className="card mb-3">
-                <img src={menu.imageSource} className="rounded mx-auto d-block" alt={menu.title}
+                <img src={menu.imageSource} className="rounded mx-auto d-block menu-item-icon" alt={menu.title}
                      style={{width: "50%"}}/>
                 <div className="card-body">
                     <div className={progressBarClass}>
@@ -255,7 +277,7 @@ const AddMenuForm = props => {
                     </div>
                 </div>
             </div>
-            <div className="input-group mb-6">
+            <div className="input-group mb-3">
                 <div className="custom-file">
                     <input type="file" className="form-control custom-file-input" id="imageSource" name="imageSource"
                            onChange={handleInputChange} required={menu.imageSource === undefined}/>
@@ -286,45 +308,20 @@ const AddMenuForm = props => {
                     });
                 }} defaultValue={menu.quantityPerOrder} value={menu.quantityPerOrder}/>
             </div>
-            <div className="form-group row">
-                <label htmlFor="orderPlaceDateTime" className="col-sm-4 col-form-label"> Enter Date and Time till order
-                    could be placed. </label>
-                <div className="col-sm-8">
-                    <DatePicker className="form-control"
-                                disabledKeyboardNavigation
-                                selected={orderPlacementDateTime}
-                                onChange={date => {
-                                    setOrderPlacementDateTime(date);
-                                    setMenu({
-                                        ...menu,
-                                        placeOrderBy: date
-                                    })
-                                }}
-                                timeInputLabel="Time:"
-                                dateFormat="MM/dd/yyyy h:mm aa"
-                                showTimeInput
-                    />
-                </div>
-            </div>
-            <div className="form-group row">
-                <label htmlFor="orderPlaceDateTime" className="col-sm-4 col-form-label"> Expected Delivery By. </label>
-                <div className="col-sm-8">
-                    <DatePicker className="form-control"
-                                disabledKeyboardNavigation
-                                selected={orderDeliveryDateTime}
-                                onChange={date => {
-                                    setOrderDeliveryDateTime(date)
-                                    setMenu({
-                                        ...menu,
-                                        etaDeliveryBy: date
-                                    })
-                                }}
-                                timeInputLabel="Time:"
-                                dateFormat="MM/dd/yyyy h:mm aa"
-                                showTimeInput
-                    />
-                </div>
-            </div>
+            <DatePickerInput selected={orderPlacementDateTime} onChange={date => {
+                setOrderPlacementDateTime(date);
+                setMenu({
+                    ...menu,
+                    placeOrderBy: date
+                })
+            }}/>
+            <DatePickerInput selected={orderDeliveryDateTime} onChange={date => {
+                setOrderDeliveryDateTime(date)
+                setMenu({
+                    ...menu,
+                    etaDeliveryBy: date
+                })
+            }}/>
             <div className="form-group">
                 <label htmlFor="spiceLevel"> Spice Level <SpiceLevel level={menu.spiceLevel}/> </label>
                 <input type="range" name="spiceLevel" className="form-control-range"
