@@ -239,3 +239,12 @@ img.menu-item-icon {
     filter: invert(1);
 }
 
+img.logo-image {
+    width: 2%;
+}
+@media only screen and (max-width: 600px) {
+    img.logo-image {
+        width: 15%;
+        margin: 0px 5px !important;
+    }
+}
