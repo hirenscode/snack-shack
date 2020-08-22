@@ -19,7 +19,8 @@ const AllMenuItems = (props) => {
                 setMenuItems(newMenus.map(i => {
                     return {
                         ...i,
-                        placeOrderByString: i.placeOrderBy === undefined ? "None" : i.placeOrderBy.toDate().toLocaleString()
+                        placeOrderByString: i.placeOrderBy === undefined ? "None" : i.placeOrderBy.toDate().toLocaleString(),
+                        deleteTriggered: false
                     }
                 }));
             }));
@@ -40,42 +41,67 @@ const AllMenuItems = (props) => {
 
     }
 
-    return <table className="table">
-        <thead className="thead-dark">
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Title</th>
-            <th scope="col">Last Displayed</th>
-            <th scope="col">Price</th>
-            <th scope="col">Flags</th>
-        </tr>
-        </thead>
-        <tbody>
-        {menuItems.map(item => (
-            <tr key={item.id}>
-                <td scope="row">
-                    <div className="btn-group" role="group" aria-label="Functions">
-                        <Link className="btn btn-primary"
-                              to={`/admin/update-menu-item?menuItemId=${item.id}`}
-                              role="button"> <i className="fa fa-edit"/> </Link>
-                        <button type="button"
-                                className="btn btn-danger"
-                                data-id={item.id}
-                                onClick={handleDelete}><i className="fa fa-trash-alt"/></button>
-                    </div>
-                </td>
-                <td> {item.title} </td>
-                <td> {item.placeOrderByString} </td>
-                <td> {item.price} </td>
-                <td>
-                    <ChefRecommended recommendation={item.chefRecommended}/> |
-                    <TodaySpecial special={item.todaySpecial}/> |
-                    <SpiceLevel level={item.spiceLevel}/>
-                </td>
-            </tr>)
-        )}
-        </tbody>
-    </table>
+    const toggleDeleteTrigger = (e) => {
+        const itemId = e.target.dataset.id;
+        const menuItem = menuItems.filter(i => i.id === itemId)[0];
+        const newMenuItem = {...menuItem, deleteTriggered: !menuItem.deleteTriggered};
+        const newMenuItems = [];
+        for (let i = 0; i < menuItems.length; i++) {
+            if (menuItems[i].id === itemId) {
+                newMenuItems.push(newMenuItem);
+            } else {
+                newMenuItems.push(menuItems[i]);
+            }
+        }
+        setMenuItems(newMenuItems)
+    }
+
+    return <div className="table-responsive">
+        <table className="table table-hover">
+            <thead className="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Last Displayed</th>
+                <th scope="col">Price</th>
+                <th scope="col">Flags</th>
+            </tr>
+            </thead>
+            <tbody>
+            {menuItems.map(item => (
+                <tr key={item.id}>
+                    {!item.deleteTriggered ? (<>
+                        <td scope="row">
+                            <div className="btn-group" role="group" aria-label="Functions">
+                                <Link className="btn btn-primary"
+                                      to={`/admin/update-menu-item?menuItemId=${item.id}`}
+                                      role="button"> <i className="fa fa-edit"/> </Link>
+                                <button type="button"
+                                        className="btn btn-danger"
+                                        data-id={item.id}
+                                        onClick={toggleDeleteTrigger}><i data-id={item.id} className="fa fa-trash-alt"/></button>
+                            </div>
+                        </td>
+                        <td> {item.title} </td>
+                        <td> {item.placeOrderByString} </td>
+                        <td> {item.price} </td>
+                        <td>
+                            <ChefRecommended recommendation={item.chefRecommended}/> |
+                            <TodaySpecial special={item.todaySpecial}/> |
+                            <SpiceLevel level={item.spiceLevel}/>
+                        </td> </>) : (
+                            <td colSpan="5"> Confirm delete {item.title}? <br/> <br/>
+                                <button type="button" className="btn btn-danger" data-id={item.id} onClick={handleDelete}> Yes </button> &nbsp;
+                                <button type="button" className="btn btn-success" data-id={item.id} onClick={toggleDeleteTrigger}> No </button> &nbsp;
+                            </td>
+                        )
+                    }
+
+                </tr>)
+            )}
+            </tbody>
+        </table>
+    </div>
 }
 
 export default AllMenuItems;

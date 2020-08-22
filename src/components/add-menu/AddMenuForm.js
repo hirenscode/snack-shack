@@ -306,7 +306,7 @@ const AddMenuForm = props => {
                         ...menu,
                         quantityPerOrder: parseInt(value)
                     });
-                }} defaultValue={menu.quantityPerOrder} value={menu.quantityPerOrder}/>
+                }} value={menu.quantityPerOrder}/>
             </div>
             <DatePickerInput selected={orderPlacementDateTime} onChange={date => {
                 setOrderPlacementDateTime(date);
