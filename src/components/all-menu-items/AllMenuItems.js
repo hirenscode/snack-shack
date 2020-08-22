@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from "react";
 import firebase from "../../firebase";
-import ChefRecommended from "../../common/ChefRecommended";
-import TodaySpecial from "../../common/TodaySpecial";
-import SpiceLevel from "../../common/SpiceLevel";
-import {Link} from "react-router-dom";
+import MenuItemRow from "./MenuItemRow";
+import MenuItemConfirmRow from "./MenuItemConfirmRow";
 
 const AllMenuItems = (props) => {
     const [menuItems, setMenuItems] = useState([]);
@@ -70,33 +68,9 @@ const AllMenuItems = (props) => {
             <tbody>
             {menuItems.map(item => (
                 <tr key={item.id}>
-                    {!item.deleteTriggered ? (<>
-                        <td scope="row">
-                            <div className="btn-group" role="group" aria-label="Functions">
-                                <Link className="btn btn-primary"
-                                      to={`/admin/update-menu-item?menuItemId=${item.id}`}
-                                      role="button"> <i className="fa fa-edit"/> </Link>
-                                <button type="button"
-                                        className="btn btn-danger"
-                                        data-id={item.id}
-                                        onClick={toggleDeleteTrigger}><i data-id={item.id} className="fa fa-trash-alt"/></button>
-                            </div>
-                        </td>
-                        <td> {item.title} </td>
-                        <td> {item.placeOrderByString} </td>
-                        <td> {item.price} </td>
-                        <td>
-                            <ChefRecommended recommendation={item.chefRecommended}/> |
-                            <TodaySpecial special={item.todaySpecial}/> |
-                            <SpiceLevel level={item.spiceLevel}/>
-                        </td> </>) : (
-                            <td colSpan="5"> Confirm delete {item.title}? <br/> <br/>
-                                <button type="button" className="btn btn-danger" data-id={item.id} onClick={handleDelete}> Yes </button> &nbsp;
-                                <button type="button" className="btn btn-success" data-id={item.id} onClick={toggleDeleteTrigger}> No </button> &nbsp;
-                            </td>
-                        )
+                    {!item.deleteTriggered ? (<MenuItemRow item={item} onClick={toggleDeleteTrigger}/>)
+                    : (<MenuItemConfirmRow item={item} onYes={handleDelete} onNo={toggleDeleteTrigger}/>)
                     }
-
                 </tr>)
             )}
             </tbody>

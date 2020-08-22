@@ -1,6 +1,5 @@
 import React from "react";
-import Route from "react-router-dom/es/Route";
-import Switch from "react-router-dom/es/Switch";
+import {Route, Switch} from "react-router-dom";
 import AllMenuItemsView from "../../common/views/AllMenuItemsView";
 import AddMenuView from "../../common/views/AddMenuView";
 import OrdersListView from "../../common/views/OrdersListView";
