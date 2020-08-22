@@ -1,9 +1,13 @@
-import React from "react";
+import React, {useContext} from "react";
 import {Link} from "react-router-dom";
 import {SETTINGS} from "./Constants";
 import firebase from "./../firebase";
+import {AuthContext} from "./Auth";
 
 function Header() {
+    const object = useContext(AuthContext);
+
+
     return <header>
         <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <img className="rounded mx-auto d-block logo-image" alt="logo" src={SETTINGS.APP.LOGO}/>
@@ -28,13 +32,15 @@ function Header() {
                             Admin
                         </a>
                         <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <Link className="dropdown-item" to="/admin/"> Chef's Home </Link>
+                            {object && !!object.currentUser ? (<><Link className="dropdown-item" to="/admin/"> Chef's Home </Link>
                             <Link className="dropdown-item" to="/admin/orders"> Orders </Link>
                             <Link className="dropdown-item" to="/admin/add-new-menu"> Add New Menu </Link>
                             <Link className="dropdown-item" to="/admin/all-menu-items"> All Menu Items </Link>
-                            <a className="dropdown-item" href="#" onClick={e => {
-                                firebase.auth().signOut()
-                            }}> Sign Out </a>
+                             <a className="dropdown-item" href="#" onClick={e => {
+                                firebase.auth().signOut().then(() =>
+                                    {console.log("Signed out successfully.");}
+                                )
+                            }}> Sign Out </a></>) : (<Link className="dropdown-item" to="/admin/"> Sign In </Link>)}
                         </div>
                         {/*<a className="nav-link" href="/admin/"> Admin </a>*/}
                     </li>
