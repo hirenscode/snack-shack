@@ -6,8 +6,10 @@ import TodaySpecial from "../../common/TodaySpecial";
 
 const MenuItem = props => {
     const [menuItem, setMenuItem] = useState(props.item);
-    const placeOrderBy = menuItem.placeOrderBy.toDate().toLocaleString();
-    const etaDeliveryBy = menuItem.etaDeliveryBy.toDate().toLocaleString();
+    const placeOrderByDate = menuItem.placeOrderBy.toDate();
+    const etaDeliveryByDate = menuItem.etaDeliveryBy.toDate();
+    const placeOrderBy = `${placeOrderByDate.toLocaleDateString(SETTINGS.GEO.LOCALE)} ${placeOrderByDate.toLocaleTimeString(SETTINGS.GEO.LOCALE)}`;
+    const etaDeliveryBy = `${etaDeliveryByDate.toLocaleDateString(SETTINGS.GEO.LOCALE)} ${etaDeliveryByDate.toLocaleTimeString(SETTINGS.GEO.LOCALE)}`;
 
     const handleToggle = (event) => {
         const itemObject = {...menuItem, checked: event.target.checked, portions: 1};

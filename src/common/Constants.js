@@ -20,7 +20,8 @@ export const SETTINGS = {
         CITY: "MUMBAI",
         STATE: "MAHARASHTRA",
         COUNTRY: "INDIA",
-        SERVING_RADIUS: 10
+        SERVING_RADIUS: 10,
+        LOCALE: "en-IN"
     },
     ORDER: {
         DONE_ICON_CLASS: "fas fa-clipboard-check",
