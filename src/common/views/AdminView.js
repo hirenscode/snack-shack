@@ -5,6 +5,7 @@ import Login from "../../components/login/Login";
 import AdminMainHeader from "../../components/admin/AdminMainHeader";
 import {AuthContext} from "../Auth";
 import AdminOperations from "../../components/admin/AdminOperations";
+import {checkUsersPlate} from "../Utility";
 
 function AdminView() {
 
@@ -15,7 +16,7 @@ function AdminView() {
         <main role="main">
             <AdminMainHeader/>
             <div className="container">
-                {!!currentUser ? (<AdminOperations/>) : (<Login/>)}
+                {!!currentUser && checkUsersPlate(currentUser._cau) ? (<AdminOperations/>) : (<Login/>)}
             </div>
         </main>
         <Footer/>

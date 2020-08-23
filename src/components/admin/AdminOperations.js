@@ -29,7 +29,7 @@ const AdminOperations = ({match}) => {
                 <Operation title={"Sign out"}
                            description={"Sign out from Chef's console."}
                            goToSource={"#"}
-                           onClick={() => firebase.auth().signOut().then(() => console.log("Signed Out")).catch(() => console.log("Error while Sign out"))}
+                           onClick={() => firebase.auth().signOut().then(() => {const doNothing = true}).catch(() => console.error("Error while Sign out"))}
                            buttonTitle={"Sign out"}
                            buttonSvg={(<SignOut/>)}
                 />

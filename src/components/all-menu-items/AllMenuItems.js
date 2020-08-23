@@ -31,7 +31,7 @@ const AllMenuItems = (props) => {
             .doc(itemId)
             .delete()
             .then(() => {
-                    console.log(menuItems);
+                    const doNothing = true
                 }
             ).catch(err => {
                 console.error(err);

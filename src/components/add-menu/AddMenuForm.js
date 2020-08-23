@@ -69,7 +69,6 @@ const AddMenuForm = props => {
                 .doc(menuItemId[0])
                 .onSnapshot(snapshot => {
                     const menuItem = {id: menuItemId[0], ...snapshot.data()};
-                    console.log(menuItem);
                     setMenu(menuItem);
                     setOrderPlacementDateTime(menuItem.placeOrderBy.toDate())
                     setOrderDeliveryDateTime(menuItem.etaDeliveryBy.toDate())
@@ -165,7 +164,6 @@ const AddMenuForm = props => {
         }
 
         let etaDeliveryByValid = false;
-        debugger;
         if (menu.etaDeliveryBy === "") {
             isValid = false;
             setMessage(`${message} \n Please enter Estimated Time of Delivery Date for the Menu.`);
@@ -224,7 +222,7 @@ const AddMenuForm = props => {
                         setProgressBarValue(0);
                         setProgressBarClass(hideProgressBarClass);
                         window.scrollTo(0, 0);
-                        console.log(err)
+                        console.error(err)
                     });
             }
         } else {
@@ -242,7 +240,7 @@ const AddMenuForm = props => {
                         setProgressBarValue(0);
                         setProgressBarClass(hideProgressBarClass);
                         window.scrollTo(0, 0);
-                        console.log(err)
+                        console.error(err)
                     });
             }
         }

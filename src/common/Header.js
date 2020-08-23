@@ -7,7 +7,6 @@ import {AuthContext} from "./Auth";
 function Header() {
     const object = useContext(AuthContext);
 
-
     return <header>
         <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <img className="rounded mx-auto d-block logo-image" alt="logo" src={SETTINGS.APP.LOGO}/>
@@ -38,11 +37,10 @@ function Header() {
                             <Link className="dropdown-item" to="/admin/all-menu-items"> All Menu Items </Link>
                              <a className="dropdown-item" href="#" onClick={e => {
                                 firebase.auth().signOut().then(() =>
-                                    {console.log("Signed out successfully.");}
+                                    {const doNothing = true}
                                 )
                             }}> Sign Out </a></>) : (<Link className="dropdown-item" to="/admin/"> Sign In </Link>)}
                         </div>
-                        {/*<a className="nav-link" href="/admin/"> Admin </a>*/}
                     </li>
                 </ul>
             </div>

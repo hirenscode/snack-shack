@@ -1,13 +1,17 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {SETTINGS} from "../../common/Constants";
 import firebase from "./../../firebase";
+import {AuthContext} from "../../common/Auth";
+import {checkUsersPlate} from "../../common/Utility";
 
 const Login = () => {
 
     const showAlertSuccessClass = "alert alert-success alert-dismissible fade show";
     const showAlertErrorClass = "alert alert-danger alert-dismissible fade show";
+    const showAlertWarningClass = "alert alert-warning alert-dismissible fade show";
     const hideAlertClass = "alert collapse";
 
+    const currentUser = useContext(AuthContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
@@ -23,11 +27,18 @@ const Login = () => {
             return ;
         }
 
+
+
         firebase.auth()
             .signInWithEmailAndPassword(email, password)
-            .then(() => {
-                setMessage("Login Successful");
-                setShowAlert(showAlertSuccessClass);
+            .then((user) => {
+                if (!checkUsersPlate(currentUser._cau)) {
+                    setMessage("You are not Authorized to access this functionality.");
+                    setShowAlert(showAlertWarningClass);
+                } else {
+                    setMessage("Login Successful");
+                    setShowAlert(showAlertSuccessClass);
+                }
             })
             .catch((err) => {
                 setMessage("Login Failed, please check your credentials and try again");

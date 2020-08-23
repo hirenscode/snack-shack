@@ -42,11 +42,11 @@ const OrdersList = () => {
             .collection("orders_flow")
             .add(newOrderFlow)
             .then(() => {
-                console.debug("Orders flow was successfully updated");
+                const doNothing = true;
             })
             .catch(err => {
                 window.scrollTo(0, 0);
-                console.log(err)
+                console.error(err)
             });
 
 
@@ -58,7 +58,7 @@ const OrdersList = () => {
                 console.debug("Orders was successfully updated");
                 retrieveOrders();
             }).catch(err => {
-            console.log(err)
+            console.error(err)
         });
     }
 

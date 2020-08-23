@@ -108,7 +108,7 @@ const PlaceOrder = (props) => {
         setOrder(newOrder);
         e.preventDefault();
         e.persist();
-        
+
         const valid = validate();
 
         if (valid) {
@@ -126,7 +126,7 @@ const PlaceOrder = (props) => {
                     setMessage("There was some error placing order, please try again!");
                     setShowAlert(showAlertErrorClass);
                     window.scrollTo(0, 0);
-                    console.log(err)
+                    console.error(err)
                 });
 
             const newOrderFlow = {orderId: orderDocId, ...orderFlow};
@@ -142,28 +142,28 @@ const PlaceOrder = (props) => {
                     setMessage("There was some error updating order flow, your order was placed successfully, but sequence of order might be disturbed!");
                     setShowAlert(showAlertErrorClass);
                     window.scrollTo(0, 0);
-                    console.log(err)
+                    console.error(err)
                 });
         }
     }
 
 
     return <>
-            <PreparingMenuCard
-                imageSource={SETTINGS.MENU.PREPARING_IMAGE}
-                title={"Menu items in Preparation"}
-                message={"Please be with us, while we decide on best of the delicacies that we could present to you for today, we will soon prepare the items for today and bring you the best crafted food, we could. Please check back again in some time."}
-                show={!showMenu}
-            />
-            <OrderMenuForm className={showAlert} message={message} onSubmit={placeOrder} onChange={handleInputChange}
-                              show={showMenu} menuItems={menuItems} retrieveMenuItems={(menuItem) =>
-                <MenuItem
-                    item={menuItem} id={menuItem.id}
-                    key={menuItem.id}
-                    onChange={(ref) => {
-                        handleSelectedItem(ref)
-                    }}
-                />} order={order}/>
+        <PreparingMenuCard
+            imageSource={SETTINGS.MENU.PREPARING_IMAGE}
+            title={"Menu items in Preparation"}
+            message={"Please be with us, while we decide on best of the delicacies that we could present to you for today, we will soon prepare the items for today and bring you the best crafted food, we could. Please check back again in some time."}
+            show={!showMenu}
+        />
+        <OrderMenuForm className={showAlert} message={message} onSubmit={placeOrder} onChange={handleInputChange}
+                          show={showMenu} menuItems={menuItems} retrieveMenuItems={(menuItem) =>
+            <MenuItem
+                item={menuItem} id={menuItem.id}
+                key={menuItem.id}
+                onChange={(ref) => {
+                    handleSelectedItem(ref)
+                }}
+            />} order={order}/>
     </>;
 }
 
