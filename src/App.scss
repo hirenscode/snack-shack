@@ -234,10 +234,10 @@ $pre-color:                         inherit !default;
 @import "node_modules/bootstrap/scss/bootstrap";
 
 // if dark mode is used, color inversion of default menu image
-img.menu-item-icon {
-    -webkit-filter: invert(1);
-    filter: invert(1);
-}
+//img.menu-item-icon {
+//    -webkit-filter: invert(1);
+//    filter: invert(1);
+//}
 
 img.logo-image {
     width: 2%;

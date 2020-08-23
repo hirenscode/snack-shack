@@ -1,12 +1,17 @@
 import Header from "../Header";
 import AddMenuForm from "../../components/add-menu/AddMenuForm";
 import Footer from "../Footer";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import queryString from 'query-string'
 import AdminMainHeader from "../../components/admin/AdminMainHeader";
 
 function UpdateMenuView(props) {
-    const menuItemId = useState(queryString.parse(props.location.search).menuItemId);
+    const [menuItemId, setMenuItemId] = useState("");
+
+    useEffect(() => {
+        const newMenuItemId = queryString.parse(props.location.search).menuItemId;
+        setMenuItemId(newMenuItemId);
+    }, []);
 
     return <>
         <Header/>

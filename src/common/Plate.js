@@ -1,8 +1,8 @@
 import {SETTINGS} from "./Constants";
 
-const salt = SETTINGS.UTILITY.N_A_M_A_K;
-const pepper = SETTINGS.UTILITY.K_A_A_L_I__M_I_R_C_H;
-const sauce = SETTINGS.UTILITY.C_H_U_T_N_E_Y;
+const salt = SETTINGS.PLATE.NMK;
+const pepper = SETTINGS.PLATE.MRC;
+const sauce = SETTINGS.PLATE.CTN;
 export const OUR_PLATE = [
     (((salt - (((salt - sauce) / pepper) - sauce - sauce)) * pepper) * (pepper + sauce)) / pepper,
     ((salt - (sauce + sauce)) * pepper),

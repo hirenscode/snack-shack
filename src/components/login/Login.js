@@ -2,7 +2,7 @@ import React, {useContext, useState} from "react";
 import {SETTINGS} from "../../common/Constants";
 import firebase from "./../../firebase";
 import {AuthContext} from "../../common/Auth";
-import {checkUsersPlate} from "../../common/Utility";
+import {checkUsersPlate} from "../../common/Plate";
 
 const Login = () => {
 

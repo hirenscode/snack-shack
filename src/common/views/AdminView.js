@@ -5,7 +5,7 @@ import Login from "../../components/login/Login";
 import AdminMainHeader from "../../components/admin/AdminMainHeader";
 import {AuthContext} from "../Auth";
 import AdminOperations from "../../components/admin/AdminOperations";
-import {checkUsersPlate} from "../Utility";
+import {checkUsersPlate} from "../Plate";
 
 function AdminView() {
 

@@ -1,32 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {SETTINGS} from "../../common/Constants";
 import * as firebase from "firebase";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import SpiceLevel from "../../common/SpiceLevel";
-import * as PropTypes from "prop-types";
+import DatePickerInput from "./DatePickerInput";
 
-function DatePickerInput(props) {
-    return <div className="form-group row">
-        <label htmlFor="orderPlaceDateTime" className="col-sm-4 col-form-label"> Enter Date and Time till order
-            could be placed. </label>
-        <div className="col-sm-8">
-            <DatePicker className="form-control"
-                        disabledKeyboardNavigation
-                        selected={props.selected}
-                        onChange={props.onChange}
-                        timeInputLabel="Time:"
-                        dateFormat="MM/dd/yyyy h:mm aa"
-                        showTimeInput
-            />
-        </div>
-    </div>;
-}
-
-DatePickerInput.propTypes = {
-    selected: PropTypes.func,
-    onChange: PropTypes.func
-};
 const AddMenuForm = props => {
     const editMode = props.editMode ? props.editMode : false;
     const menuItemId = editMode ? props.menuItemId : null;
@@ -49,6 +27,8 @@ const AddMenuForm = props => {
     const showAlertErrorClass = "alert alert-danger alert-dismissible fade show";
     const showAlertWarningClass = "alert alert-warning alert-dismissible fade show";
     const hideAlertClass = "alert collapse";
+    const invertedImageStyle = {filter: "invert(1)"};
+    const regularImage = "rounded mx-auto d-block"
 
     //States
     const [image, setImage] = useState(null);
@@ -56,25 +36,25 @@ const AddMenuForm = props => {
     const [progressBarClass, setProgressBarClass] = useState(hideProgressBarClass);
     const [progressBarValue, setProgressBarValue] = useState(1);
     const [progressBarAnimationClass, setProgressBarAnimationClass] = useState(animatedStripedProgressBarClass);
-    const [orderPlacementDateTime, setOrderPlacementDateTime] = useState();
-    const [orderDeliveryDateTime, setOrderDeliveryDateTime] = useState();
+    const [orderPlacementDateTime, setOrderPlacementDateTime] = useState(null);
+    const [orderDeliveryDateTime, setOrderDeliveryDateTime] = useState(null);
     const [message, setMessage] = useState("");
     const [showAlert, setShowAlert] = useState(hideAlertClass);
     const [imageIsUploaded, setImageIsUploaded] = useState(false);
 
     useEffect(() => {
-        if (editMode) {
+        if (editMode && menuItemId) {
             firebase.firestore()
                 .collection("menus")
-                .doc(menuItemId[0])
+                .doc(menuItemId)
                 .onSnapshot(snapshot => {
-                    const menuItem = {id: menuItemId[0], ...snapshot.data()};
+                    const menuItem = {id: menuItemId, ...snapshot.data()};
                     setMenu(menuItem);
-                    setOrderPlacementDateTime(menuItem.placeOrderBy.toDate())
-                    setOrderDeliveryDateTime(menuItem.etaDeliveryBy.toDate())
+                    setOrderPlacementDateTime(menuItem.placeOrderBy.toDate());
+                    setOrderDeliveryDateTime(menuItem.etaDeliveryBy.toDate());
                 })
         }
-    }, [])
+    }, [menuItemId])
 
     const handleInputChange = e => {
         let {name, value} = e.target;
@@ -266,7 +246,7 @@ const AddMenuForm = props => {
             </div>
             <div className="card mb-3">
                 <img src={menu.imageSource} className="rounded mx-auto d-block menu-item-icon" alt={menu.title}
-                     style={{width: "50%"}}/>
+                     style={menu.imageSource === SETTINGS.MENU.DEFAULT_MENU_IMAGE ? {...invertedImageStyle, width: "50%"} : {width: "50%"}}/>
                 <div className="card-body">
                     <div className={progressBarClass}>
                         <div className={progressBarAnimationClass} role="progressbar"

@@ -72,10 +72,10 @@ export const SETTINGS = {
         PREPARING_IMAGE: "https://firebasestorage.googleapis.com/v0/b/snack-shack-test.appspot.com/o/images%2Fpreparing-menu%2FPreparing1.jpg?alt=media&token=d7e570a2-4665-4ad8-9362-4c3c0a6bf413",
         DEFAULT_MENU_IMAGE: "https://firebasestorage.googleapis.com/v0/b/snack-shack-test.appspot.com/o/images%2Fmenu-item%2Fdefault_menu_item.png?alt=media&token=7a617d25-b6f2-4943-bbc4-e180c87b36c0"
     },
-    UTILITY: {
-        N_A_M_A_K: 40,
-        K_A_A_L_I__M_I_R_C_H: 3,
-        C_H_U_T_N_E_Y: 1
+    PLATE: {
+        NMK: 40,
+        MRC: 3,
+        CTN: 1
     }
 
 }
