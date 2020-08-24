@@ -28,7 +28,6 @@ const AddMenuForm = props => {
     const showAlertWarningClass = "alert alert-warning alert-dismissible fade show";
     const hideAlertClass = "alert collapse";
     const invertedImageStyle = {filter: "invert(1)"};
-    const regularImage = "rounded mx-auto d-block"
 
     //States
     const [image, setImage] = useState(null);
@@ -99,16 +98,16 @@ const AddMenuForm = props => {
                 console.error(error)
                 switch (error.code) {
                     case 'storage/unauthorized':
-                        // User doesn't have permission to access the object
+                        console.error("User doesn't have permission to access the object");
                         break;
-
                     case 'storage/canceled':
-                        // User canceled the upload
+                        console.error("User canceled the upload");
                         break;
-
                     case 'storage/unknown':
-                        // Unknown error occurred, inspect error.serverResponse
+                        console.error(`Unknown error occurred, ${error.serverResponse}`);
                         break;
+                    default:
+                        console.error(`Default error occurred, ${error.serverResponse}`);
                 }
             }, () => {
                 uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
@@ -286,14 +285,18 @@ const AddMenuForm = props => {
                     });
                 }} value={menu.quantityPerOrder}/>
             </div>
-            <DatePickerInput selected={orderPlacementDateTime} onChange={date => {
+            <DatePickerInput title={"Enter Date and Time till order could be placed"}
+                selected={orderPlacementDateTime}
+                onChange={date => {
                 setOrderPlacementDateTime(date);
                 setMenu({
                     ...menu,
                     placeOrderBy: date
                 })
             }}/>
-            <DatePickerInput selected={orderDeliveryDateTime} onChange={date => {
+            <DatePickerInput title={"Expected Delivery By Date and Time."}
+                selected={orderDeliveryDateTime}
+                onChange={date => {
                 setOrderDeliveryDateTime(date)
                 setMenu({
                     ...menu,

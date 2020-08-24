@@ -121,25 +121,28 @@ const PlaceOrder = (props) => {
                     setMessage("Order Placed successfully!");
                     setShowAlert(showAlertSuccessClass);
                     window.scrollTo(0, 0);
+
+                    const newOrderFlow = {orderId: orderDocId, ...orderFlow};
+                    setOrderFlow(newOrderFlow);
+                    firebase.firestore()
+                        .collection("orders_flow")
+                        .add(newOrderFlow)
+                        .catch(err => {
+                            setMessage("There was some error updating order flow, your order was placed successfully, but sequence of order might be disturbed!");
+                            setShowAlert(showAlertErrorClass);
+                            window.scrollTo(0, 0);
+                            console.error("Error while Order Flow \n" + err)
+                        });
+
+                    firebase.firestore()
+                        .collection("notifications")
+                        .add({orderId: orderDocId, name: newOrder.name, notified: false, read: false})
+                        .catch(err => {
+                            console.error("Error while Notifying \n" + err);
+                        });
                 })
                 .catch(err => {
                     setMessage("There was some error placing order, please try again!");
-                    setShowAlert(showAlertErrorClass);
-                    window.scrollTo(0, 0);
-                    console.error(err)
-                });
-
-            const newOrderFlow = {orderId: orderDocId, ...orderFlow};
-            setOrderFlow(newOrderFlow);
-
-            firebase.firestore()
-                .collection("orders_flow")
-                .add(newOrderFlow)
-                .then(() => {
-                    let doNothing = true;
-                })
-                .catch(err => {
-                    setMessage("There was some error updating order flow, your order was placed successfully, but sequence of order might be disturbed!");
                     setShowAlert(showAlertErrorClass);
                     window.scrollTo(0, 0);
                     console.error(err)

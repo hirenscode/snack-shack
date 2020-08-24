@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import firebase from "../../firebase";
 import TrackOrderCard from "./TrackOrderCard";
+import {Link} from "react-router-dom";
 
 const TrackOrders = (props) => {
 
@@ -9,6 +10,7 @@ const TrackOrders = (props) => {
     const [message, setMessage] = useState("Please use text field to track your order");
     const [messageClass, setMessageClass] = useState("alert alert-warning show");
     const [orders, setOrders] = useState([]);
+    const [showError, setShowError] = useState(false);
 
     const handleInputChange = e => {
         let {name, value} = e.target;
@@ -36,17 +38,23 @@ const TrackOrders = (props) => {
                     ...doc.data()
                 }));
                 setOrders(newOrders);
+                setShowError(newOrders.length === 0);
             })
     }
 
     let cardOrMessage;
     if (orders.length > 0) {
-        cardOrMessage = <table className="table table-hover">
-            {orders.map(order => (
-                <TrackOrderCard order={order}/>
-            ))}
-
-        </table>
+        cardOrMessage = orders.map(order => (
+                <TrackOrderCard order={order} key={`card${order.id}`}/>
+            ));
+    } else if (showError) {
+        cardOrMessage = <div className="card" style={{width: "18rem"}}>
+            <div className="card-body">
+                <h5 className="card-title"> No Order Placed </h5>
+                <p className="card-text">You haven't placed any orders yet.</p>
+                <Link to={"/"}> Place Order </Link>
+            </div>
+        </div>;
     }
 
     return<>
