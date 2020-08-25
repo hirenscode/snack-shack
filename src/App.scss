@@ -77,6 +77,7 @@ $pink:    #e83e8c !default;
 $red:     #e74c3c !default;
 $orange:  #fd7e14 !default;
 $yellow:  #f39c12 !default;
+$spellow: #FFD300 !default;
 $green:   #00bc8c !default;
 $teal:    #20c997 !default;
 $cyan:    #3498db !default;
@@ -247,4 +248,12 @@ img.logo-image {
         width: 15%;
         margin: 0px 5px !important;
     }
+}
+
+i.fa-hat-wizard {
+  color: $cyan;
+}
+
+i.fa-star {
+    color: $spellow;
 }
