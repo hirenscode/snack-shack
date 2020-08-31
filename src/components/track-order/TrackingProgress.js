@@ -27,10 +27,10 @@ const TrackingProgress = (props) => {
                 <ul id="progress-bar">
                     {
                         orderFlow.map(flow => (
-                        <li>
+                        <li key={`flowKey${flow.id}`}>
                             <span className={flow.statusId <= orderStatus ? "processing-box bg-success" : "processing-box bg-dark text-white"}>
-                                <span className="tooltiptext"> {SETTINGS.ORDER.STATUS[flow.statusId].TEXT} </span>
-                                <i className={SETTINGS.ORDER.STATUS[flow.statusId].ICON_CLASS}/>
+                                <span className="tooltiptext"> {SETTINGS.ORDER.STATUS[flow.statusId] ? SETTINGS.ORDER.STATUS[flow.statusId].TEXT : "NONE"} </span>
+                                <i className={SETTINGS.ORDER.STATUS[flow.statusId] ? SETTINGS.ORDER.STATUS[flow.statusId].ICON_CLASS : "noneClass"}/>
                             </span>
                         </li>
                     ))

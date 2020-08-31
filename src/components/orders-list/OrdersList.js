@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import firebase from "../../firebase";
 import {SETTINGS} from "../../common/Constants";
 import OrderActions from "./OrderActions";
+import OrderInfoModal from "./OrderInfoModal";
+import {Info} from "../admin/OperationIcons";
 
 
 const OrdersList = () => {
@@ -34,34 +36,56 @@ const OrdersList = () => {
 
     const handleChange = (e) => {
         let orderId = e.target.dataset.orderId;
+        let currentStatus = e.target.dataset.currentStatus;
+        currentStatus = currentStatus ? currentStatus : -1;
         let value = parseInt(e.target.value);
-        let paymentDone = orders.find(o => o.id === orderId).paymentDone;
-        let newOrderFlow = {...initialOrderFlow, orderId: orderId, statusId: value, lastUpdateDate: Date.now(), paymentDone: paymentDone}
+        let order = orders.find(o => o.id === orderId);
+        let paymentDone = order.paymentDone;
+        let newOrderFlow = {
+            ...initialOrderFlow,
+            orderId: orderId,
+            statusId: value,
+            lastUpdateDate: Date.now(),
+            paymentDone: paymentDone
+        }
 
-        firebase.firestore()
-            .collection("orders_flow")
-            .add(newOrderFlow)
-            .then(() => {
-                const doNothing = true;
-            })
-            .catch(err => {
-                window.scrollTo(0, 0);
+        debugger;
+        if (!isNaN(value) && value !== currentStatus) {
+            firebase.firestore()
+                .collection("orders_flow")
+                .add(newOrderFlow)
+                .then(() => {
+                    const doNothing = true;
+                })
+                .catch(err => {
+                    window.scrollTo(0, 0);
+                    console.error(err)
+                });
+
+
+            firebase.firestore()
+                .collection("orders")
+                .doc(orderId)
+                .update({status: value, paymentDone: paymentDone, lastUpdateDate: Date.now()})
+                .then(() => {
+                    console.debug("Orders was successfully updated");
+                    retrieveOrders();
+                }).catch(err => {
                 console.error(err)
             });
-
-
-        firebase.firestore()
-            .collection("orders")
-            .doc(orderId)
-            .update({status: value, paymentDone: paymentDone, lastUpdateDate: Date.now()})
-            .then(() => {
-                console.debug("Orders was successfully updated");
-                retrieveOrders();
-            }).catch(err => {
-            console.error(err)
-        });
+        } else {
+            firebase.firestore()
+                .collection("orders")
+                .doc(orderId)
+                .update({paymentDone: !paymentDone, lastUpdateDate: Date.now()})
+                .then(() => {
+                    console.debug("Orders was successfully updated");
+                    retrieveOrders();
+                }).catch(err => {
+                console.error(err)
+            });
+        }
     }
-
 
 
     return <div className="table-responsive">
@@ -69,6 +93,7 @@ const OrdersList = () => {
             <thead>
             <tr>
                 <th scope="col" style={{width: "18%"}}>Name / Contact</th>
+                <th scope="col"> Order Info </th>
                 <th scope="col">Comments</th>
                 <th scope="col">Total</th>
                 <th scope="col">Order Status</th>
@@ -82,23 +107,37 @@ const OrdersList = () => {
                 orders.map((order, index) => (
                     <tr key={order.id}>
                         <td> {order.name} / {order.contact} / {order.email}  </td>
+                        <td> <button type="button"
+                                     className="btn btn-primary"
+                                     key={`orderInfoKey${order.id}`}
+                                     id={`orderInfo${order.id}`}
+                                     data-toggle="modal" data-target={`#modal${order.id}`}> <Info/> </button>
+                            <OrderInfoModal order={order}/>
+                        </td>
                         <td> {order.comments}  </td>
                         <td> {SETTINGS.CURRENCY.SYMBOL} {order.total}  </td>
                         <td> {SETTINGS.ORDER.STATUS[order.status].TEXT} </td>
                         <td>
                             <div className="custom-control custom-switch">
-                                <input type="checkbox" className="custom-control-input" id="customSwitch1"
+                                <input type="checkbox" key={`payDoneCheckKey${order.id}`}
+                                       className="custom-control-input" id={`payDoneCheck${order.id}`}
+                                       data-order-id={order.id}
+                                       data-current-status={order.status}
                                        checked={order.paymentDone} onChange={(event => {
-                                           const newOrders = orders.map(newOrder => {
-                                               if(newOrder.id === order.id) {
-                                                   return {...newOrder, paymentDone: !newOrder.paymentDone};
-                                               } else {
-                                                   return newOrder;
-                                               }
-                                           });
-                                           setOrders(newOrders);
+                                    const newOrders = orders.map(newOrder => {
+                                        if (newOrder.id === order.id) {
+                                            return {...newOrder, paymentDone: !newOrder.paymentDone};
+                                        } else {
+                                            return newOrder;
+                                        }
+                                    });
+                                    setOrders(newOrders);
+                                    handleChange(event);
                                 })}/>
-                                    <label className="custom-control-label" htmlFor="customSwitch1"> {order.paymentDone ? "" : "Not "} Done </label>
+                                <label className="custom-control-label" key={`payDoneCheckLabel${order.id}`}
+                                       htmlFor={`payDoneCheck${order.id}`}> {order.paymentDone ? "" : "Not "} Done
+                                    {/*<button type="button" className="btn btn-primary btn-sm" key={`payDoneCheckSave${order.id}`} id={`payDoneCheckSave${order.id}`}> Save </button> */}
+                                </label>
                             </div>
                         </td>
                         {/*<td> {SETTINGS.ORDER.STATUS[order.status].TEXT} and {order.status.payment_done ? SETTINGS.ORDER.STATUS[2].TEXT : "NO " + SETTINGS.ORDER.STATUS[2].TEXT}  </td>*/}

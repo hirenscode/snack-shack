@@ -17,7 +17,7 @@ const TrackOrderCard = (props) => {
         </div>
         <ul className="list-group list-group-flush"> {
             order.selectedItems.map(item =>
-                <li className="list-group-item" key={`list${item.id}`}> {item.title}: <strong> {SETTINGS.CURRENCY.SYMBOL} {item.price} </strong> </li>)
+                <li className="list-group-item" key={`list${item.id}`}> {item.portions} {item.title}: <strong> {SETTINGS.CURRENCY.SYMBOL} {item.price} </strong> </li>)
         }
         </ul>
         <div className="card-footer text-muted">
