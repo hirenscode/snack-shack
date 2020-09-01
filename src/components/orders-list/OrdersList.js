@@ -11,7 +11,7 @@ const OrdersList = () => {
         orderId: "",
         statusId: 0,
         lastUpdateDate: Date.now(),
-        comments: "Second Order (Auto Comment) ",
+        comments: "",
         paymentDone: false
     }
 
@@ -35,22 +35,24 @@ const OrdersList = () => {
     }
 
     const handleChange = (e) => {
-        let orderId = e.target.dataset.orderId;
+        const orderId = e.target.dataset.orderId;
         let currentStatus = e.target.dataset.currentStatus;
         currentStatus = currentStatus ? currentStatus : -1;
-        let value = parseInt(e.target.value);
-        let order = orders.find(o => o.id === orderId);
-        let paymentDone = order.paymentDone;
-        let newOrderFlow = {
-            ...initialOrderFlow,
-            orderId: orderId,
-            statusId: value,
-            lastUpdateDate: Date.now(),
-            paymentDone: paymentDone
-        }
+        const value = parseInt(e.target.value);
+        const order = orders.find(o => o.id === orderId);
+        const paymentDone = order.paymentDone;
+
 
         debugger;
         if (!isNaN(value) && value !== currentStatus) {
+            const newOrderFlow = {
+                ...initialOrderFlow,
+                orderId: orderId,
+                statusId: value,
+                lastUpdateDate: Date.now(),
+                paymentDone: paymentDone
+            }
+
             firebase.firestore()
                 .collection("orders_flow")
                 .add(newOrderFlow)
@@ -61,7 +63,6 @@ const OrdersList = () => {
                     window.scrollTo(0, 0);
                     console.error(err)
                 });
-
 
             firebase.firestore()
                 .collection("orders")
@@ -87,6 +88,19 @@ const OrdersList = () => {
         }
     }
 
+    const togglePayDone = (e) => {
+        const orderId = e.target.dataset.orderId;
+        const order = orders.find(o => o.id === orderId);
+        const newOrders = orders.map(newOrder => {
+            if (newOrder.id === order.id) {
+                return {...newOrder, paymentDone: !newOrder.paymentDone};
+            } else {
+                return newOrder;
+            }
+        });
+        setOrders(newOrders);
+        handleChange(e);
+    }
 
     return <div className="table-responsive">
         <table className="table table-hover">
@@ -123,24 +137,12 @@ const OrdersList = () => {
                                        className="custom-control-input" id={`payDoneCheck${order.id}`}
                                        data-order-id={order.id}
                                        data-current-status={order.status}
-                                       checked={order.paymentDone} onChange={(event => {
-                                    const newOrders = orders.map(newOrder => {
-                                        if (newOrder.id === order.id) {
-                                            return {...newOrder, paymentDone: !newOrder.paymentDone};
-                                        } else {
-                                            return newOrder;
-                                        }
-                                    });
-                                    setOrders(newOrders);
-                                    handleChange(event);
-                                })}/>
+                                       checked={order.paymentDone} onChange={togglePayDone}/>
                                 <label className="custom-control-label" key={`payDoneCheckLabel${order.id}`}
                                        htmlFor={`payDoneCheck${order.id}`}> {order.paymentDone ? "" : "Not "} Done
-                                    {/*<button type="button" className="btn btn-primary btn-sm" key={`payDoneCheckSave${order.id}`} id={`payDoneCheckSave${order.id}`}> Save </button> */}
                                 </label>
                             </div>
                         </td>
-                        {/*<td> {SETTINGS.ORDER.STATUS[order.status].TEXT} and {order.status.payment_done ? SETTINGS.ORDER.STATUS[2].TEXT : "NO " + SETTINGS.ORDER.STATUS[2].TEXT}  </td>*/}
                         <td>
                             {SETTINGS.ORDER.STATUS_FLOW[order.status].map(statusId => (
                                 <OrderActions key={"label" + order.id + statusId} order={order} statusId={statusId}
