@@ -41,9 +41,7 @@ const OrdersList = () => {
         const value = parseInt(e.target.value);
         const order = orders.find(o => o.id === orderId);
         const paymentDone = order.paymentDone;
-
-
-        debugger;
+        
         if (!isNaN(value) && value !== currentStatus) {
             const newOrderFlow = {
                 ...initialOrderFlow,
