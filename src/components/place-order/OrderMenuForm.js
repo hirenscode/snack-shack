@@ -1,9 +1,9 @@
-import ListMenuItems from "./ListMenuItems";
-import {SETTINGS} from "../../common/Constants";
 import React from "react";
+import ListMenuItems from "./ListMenuItems";
+import TotalAmountCard from "./TotalAmountCard";
 
 function OrderMenuForm(props) {
-    const {className, message, onSubmit, onChange, show, menuItems, retrieveMenuItems, order} = props;
+    const {className, message, onSubmit, onChange, show, menuItems, retrieveMenuItems, order, addQuantity, removeQuantity} = props;
     const visibility = show ? "visible" : "invisible d-none";
     return <div className={visibility}>
         <div className={className} role="alert">
@@ -33,18 +33,7 @@ function OrderMenuForm(props) {
                     if you have any medical condition or allergies to avoid any kind of food items </label>
                 <textarea className="form-control" id="comments" rows="3" name="comments" onChange={onChange}/>
             </div>
-
-            <div className="form-group">
-                <div className="card">
-                    <h5 className="card-header"> Total Amount </h5>
-                    <div className="card-body">
-                        <h5 className="card-title"> {SETTINGS.CURRENCY.SYMBOL} {order.total}  </h5>
-                        <p className="card-text"> total amount shown here does not include taxes or GST.</p>
-                        {/*<a href="#" className="btn btn-primary">Go somewhere</a>*/}
-                    </div>
-                </div>
-            </div>
-
+            <TotalAmountCard menuItems={menuItems} order={order} addQuantity={addQuantity} removeQuantity={removeQuantity}/>
             <div className="form-group">
                 <button
                     type="submit"

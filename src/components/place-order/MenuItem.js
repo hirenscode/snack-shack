@@ -3,6 +3,7 @@ import {SETTINGS} from "../../common/Constants";
 import SpiceLevel from "../../common/SpiceLevel";
 import ChefRecommended from "../../common/ChefRecommended";
 import TodaySpecial from "../../common/TodaySpecial";
+import {Minus, Plus} from "../admin/OperationIcons";
 
 const MenuItem = props => {
     const [menuItem, setMenuItem] = useState(props.item);

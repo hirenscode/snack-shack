@@ -151,6 +151,17 @@ const PlaceOrder = (props) => {
     }
 
 
+    function modifyQuantity(item, add) {
+        debugger;
+        let newSelectedItems = order.selectedItems;
+        let indexOfItem = newSelectedItems.map(i => i.id).indexOf(item.id);
+        let newTotal = 0;
+        newSelectedItems[indexOfItem].portions = add ? item.portions + 1 : item.portions - 1;
+        newTotal = newSelectedItems.map(i => (i.price * i.portions)).reduce((p, c) => p + c, newTotal);
+        const newOrder = {...order, total: newTotal, selectedItems: newSelectedItems};
+        setOrder(newOrder);
+    }
+
     return <>
         <PreparingMenuCard
             imageSource={SETTINGS.MENU.PREPARING_IMAGE}
@@ -159,14 +170,18 @@ const PlaceOrder = (props) => {
             show={!showMenu}
         />
         <OrderMenuForm className={showAlert} message={message} onSubmit={placeOrder} onChange={handleInputChange}
-                          show={showMenu} menuItems={menuItems} retrieveMenuItems={(menuItem) =>
+                       show={showMenu} menuItems={menuItems} retrieveMenuItems={(menuItem) =>
             <MenuItem
                 item={menuItem} id={menuItem.id}
                 key={menuItem.id}
-                onChange={(ref) => {
-                    handleSelectedItem(ref)
+                onChange={(item) => {
+                    handleSelectedItem(item);
                 }}
-            />} order={order}/>
+            />} order={order} addQuantity={(item) => {
+            modifyQuantity(item, true);
+        }} removeQuantity={(item) => {
+            modifyQuantity(item, false);
+        }}/>
     </>;
 }
 

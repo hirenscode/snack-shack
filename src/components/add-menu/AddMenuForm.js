@@ -13,7 +13,7 @@ const AddMenuForm = props => {
         title: "",
         description: "",
         imageSource: SETTINGS.MENU.DEFAULT_MENU_IMAGE,
-        price: "",
+        price: 0,
         placeOrderBy: "",
         etaDeliveryBy: "",
         spiceLevel: 0,
