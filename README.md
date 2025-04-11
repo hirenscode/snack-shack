@@ -2,6 +2,12 @@
 
 A React-based food ordering system with admin dashboard for managing menus and orders.
 
+## Live Demo
+
+A demo version of the application is available at [https://snack-shack-test.web.app/](https://snack-shack-test.web.app/). Please note that this demo site may not always be up-to-date with the latest features. For the most current visual references and functionality overview, please refer to our documentation:
+- [End User Guide](./documentation/EndUser.md) - See how customers interact with the ordering system
+- [Chef Console Documentation](./documentation/ChefConsole.md) - View the admin interface features and capabilities
+
 ## Features
 
 - User-friendly food ordering interface
@@ -14,6 +20,11 @@ A React-based food ordering system with admin dashboard for managing menus and o
   - Authentication
   - Real-time database
   - Storage for menu images
+
+## Documentation
+
+- [End User Guide](./documentation/EndUser.md) - Complete guide for customers using the ordering system
+- [Chef Console Documentation](./documentation/ChefConsole.md) - Comprehensive guide for the admin interface
 
 ## Prerequisites
 
