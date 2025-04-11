@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import './App.scss';
-import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import AdminHome from "./components/admin/AdminHome";
 import {SETTINGS} from "./common/Constants";
 import HomeView from "./common/views/HomeView";
@@ -14,11 +14,11 @@ function App() {
     return (
         <>
             <Router>
-                <Switch>
-                    <Route exact path="/" component={HomeView}/>
-                    <Route path="/track-orders/" component={TrackOrdersView}/>
-                    <Route path="/admin" component={AdminHome}/>
-                </Switch>
+                <Routes>
+                    <Route exact path="/" element={<HomeView />} />
+                    <Route path="/track-orders/" element={<TrackOrdersView />} />
+                    <Route path="/admin/*" element={<AdminHome />} />
+                </Routes>
             </Router>
         </>
     );

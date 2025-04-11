@@ -1,68 +1,148 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Snack Shack - Food Ordering System
 
-## Available Scripts
+A React-based food ordering system with admin dashboard for managing menus and orders.
 
-In the project directory, you can run:
+## Features
 
-### `npm start`
+- User-friendly food ordering interface
+- Real-time order tracking
+- Admin dashboard for managing:
+  - Menu items
+  - Orders
+  - User authentication
+- Firebase integration for:
+  - Authentication
+  - Real-time database
+  - Storage for menu images
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Prerequisites
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+- Node.js (v16 or higher)
+- npm (v7 or higher)
+- Firebase account
 
-### `npm test`
+## Setup Instructions
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd snack-shack
+   ```
 
-### `npm run build`
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. **Firebase Setup**
+   - Create a new Firebase project
+   - Enable Authentication (Email/Password)
+   - Enable Firestore Database
+   - Enable Storage
+   - Create a `.env` file in the root directory with your Firebase config:
+     ```
+     REACT_APP_API_KEY=your-api-key
+     REACT_APP_AUTH_DOMAIN=your-auth-domain
+     REACT_APP_DATABASE_URL=your-database-url
+     REACT_APP_PROJECT_ID=your-project-id
+     REACT_APP_STORAGE_BUCKET=your-storage-bucket
+     REACT_APP_MESSAGING_SENDER_ID=your-messaging-sender-id
+     REACT_APP_APP_ID=your-app-id
+     ```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+4. **Firestore Setup**
+   - Create a collection named `users_type`
+   - Add a document with the following structure:
+     ```json
+     {
+       "uid": "admin-user-uid",
+       "type": "admin"
+     }
+     ```
+   - Replace `admin-user-uid` with the UID of your admin user from Firebase Authentication
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+5. **Firestore Security Rules**
+   Update your Firestore security rules to:
+   ```javascript
+   rules_version = '2';
+   service cloud.firestore {
+     match /databases/{database}/documents {
+       match /users_type/{document=**} {
+         allow read: if request.auth != null;
+       }
+       
+       match /menus/{document=**} {
+         allow read: if true;
+         allow write: if request.auth != null && 
+           exists(/databases/$(database)/documents/users_type/$(request.auth.uid)) &&
+           get(/databases/$(database)/documents/users_type/$(request.auth.uid)).data.type == "admin";
+       }
+       
+       match /orders/{document=**} {
+         allow read: if request.auth != null;
+         allow write: if request.auth != null;
+       }
+       
+       match /orders_flow/{document=**} {
+         allow read: if request.auth != null;
+         allow write: if request.auth != null;
+       }
+       
+       match /notifications/{document=**} {
+         allow read: if request.auth != null;
+         allow write: if request.auth != null;
+       }
+     }
+   }
+   ```
 
-### `npm run eject`
+## Running the Application
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. **Development Mode**
+   ```bash
+   npm start
+   ```
+   Runs the app in development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. **Production Build**
+   ```bash
+   npm run build
+   ```
+   Builds the app for production to the `build` folder.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Project Structure
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
+src/
+├── components/         # Reusable UI components
+│   ├── admin/         # Admin-specific components
+│   ├── login/         # Login-related components
+│   ├── orders-list/   # Order management components
+│   └── place-order/   # Order placement components
+├── common/            # Shared components and utilities
+├── firebase.js        # Firebase configuration
+└── App.js            # Main application component
+```
 
-## Learn More
+## Technologies Used
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- React 18
+- React Router v6
+- Firebase
+  - Authentication
+  - Firestore
+  - Storage
+- Bootstrap 4
+- SASS
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Contributing
 
-### Code Splitting
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+## License
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+This project is licensed under the MIT License - see the LICENSE file for details.

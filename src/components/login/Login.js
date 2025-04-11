@@ -3,6 +3,7 @@ import {SETTINGS} from "../../common/Constants";
 import firebase from "./../../firebase";
 import {AuthContext} from "../../common/Auth";
 import {checkUsersPlate} from "../../common/Plate";
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
 
@@ -11,7 +12,8 @@ const Login = () => {
     const showAlertWarningClass = "alert alert-warning alert-dismissible fade show";
     const hideAlertClass = "alert collapse";
 
-    const currentUser = useContext(AuthContext);
+    const {currentUser} = useContext(AuthContext);
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
@@ -24,26 +26,44 @@ const Login = () => {
         if (email === "" || password === "") {
             setMessage("Please enter your credentials");
             setShowAlert(showAlertErrorClass);
-            return ;
+            return;
         }
 
-
-
+        console.log("Attempting login...");
         firebase.auth()
             .signInWithEmailAndPassword(email, password)
-            .then((user) => {
-                if (!checkUsersPlate(currentUser._cau)) {
-                    setMessage("You are not Authorized to access this functionality.");
-                    setShowAlert(showAlertWarningClass);
-                } else {
-                    setMessage("Login Successful");
-                    setShowAlert(showAlertSuccessClass);
-                }
+            .then((userCredential) => {
+                console.log("Login successful, checking admin status...");
+                // Get the user from the credential
+                const user = userCredential.user;
+                
+                // Check if user is admin by querying Firestore
+                return firebase.firestore()
+                    .collection("users_type")
+                    .where("uid", "==", user.uid)
+                    .get()
+                    .then((snapshot) => {
+                        const isAdmin = !snapshot.empty && snapshot.docs[0].data().type === "admin";
+                        console.log("Admin check result:", isAdmin);
+                        
+                        if (!isAdmin) {
+                            setMessage("You are not Authorized to access this functionality.");
+                            setShowAlert(showAlertWarningClass);
+                            // Sign out the user since they're not authorized
+                            return firebase.auth().signOut();
+                        } else {
+                            setMessage("Login Successful");
+                            setShowAlert(showAlertSuccessClass);
+                            console.log("Navigating to admin dashboard...");
+                            // Navigate to admin dashboard after successful login
+                            navigate("/admin/", { replace: true });
+                        }
+                    });
             })
             .catch((err) => {
                 setMessage("Login Failed, please check your credentials and try again");
                 setShowAlert(showAlertErrorClass);
-                console.error(err);
+                console.error("Login error:", err);
             });
     }
 

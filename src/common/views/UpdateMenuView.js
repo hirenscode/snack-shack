@@ -2,16 +2,17 @@ import Header from "../Header";
 import AddMenuForm from "../../components/add-menu/AddMenuForm";
 import Footer from "../Footer";
 import React, {useEffect, useState} from "react";
-import queryString from 'query-string'
+import {useSearchParams} from "react-router-dom";
 import AdminMainHeader from "../../components/admin/AdminMainHeader";
 
-function UpdateMenuView(props) {
+function UpdateMenuView() {
+    const [searchParams] = useSearchParams();
     const [menuItemId, setMenuItemId] = useState("");
 
     useEffect(() => {
-        const newMenuItemId = queryString.parse(props.location.search).menuItemId;
+        const newMenuItemId = searchParams.get("menuItemId");
         setMenuItemId(newMenuItemId);
-    }, []);
+    }, [searchParams]);
 
     return <>
         <Header/>
